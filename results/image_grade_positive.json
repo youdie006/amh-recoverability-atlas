@@ -1,0 +1,13 @@
+{
+  "spec": "image->blastocyst grade (positive control, Kromp DINOv2-giant, patient-split)",
+  "EXP_silver_auroc": 0.96,
+  "ICM_silver_auroc": 0.878,
+  "TE_silver_auroc": 0.825,
+  "n_te": 192,
+  "contrast": {
+    "morphology_grade": "0.83-0.96",
+    "AMH": "~0.50 (ceiling)",
+    "pregnancy": "~0.55"
+  },
+  "note": "Embryo representation encodes intrinsic morphology (Gardner grades) but NOT maternal AMH."
+}

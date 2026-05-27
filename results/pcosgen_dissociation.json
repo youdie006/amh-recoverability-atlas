@@ -1,0 +1,17 @@
+{
+  "spec": "PCOSGen replication of generative-vs-discriminative dissociation (2nd ovarian cohort)",
+  "cohort": "PCOSGen PCOS-vs-healthy",
+  "n": 3200,
+  "probe_metadata_only_auroc": 0.7201560817964253,
+  "probe_raw_auroc": 0.7979651710498703,
+  "probe_residualized_auroc": 0.6730907045258651,
+  "probe_drop": 0.125,
+  "otcfm_raw_d": 1.3426543474197388,
+  "otcfm_raw_perm_p": 0.0,
+  "otcfm_residualized_d": 0.7906084656715393,
+  "otcfm_residualized_perm_p": 0.0,
+  "otcfm_residualized_null_mean": 0.5505150844653447,
+  "dissociation_replicated": false,
+  "note": "If probe drops under residualization but OT-CFM transport survives (p<0.05), the generative>discriminative robustness dissociation is replicated on a 2nd independent ovarian cohort.",
+  "ts": "2026-05-27T00:12:23Z"
+}

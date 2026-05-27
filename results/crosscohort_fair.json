@@ -1,0 +1,22 @@
+{
+  "spec": "fair cross-cohort transfer (aligned labels + CORAL); cached features",
+  "raw_labels(PCO_vs_DF+Normal)|z": {
+    "fuid->pcosgen": 0.551,
+    "pcosgen->fuid": 0.437
+  },
+  "raw_labels(PCO_vs_DF+Normal)|coral": {
+    "fuid->pcosgen": 0.542,
+    "pcosgen->fuid": 0.443
+  },
+  "aligned_labels(PCO_vs_Normal,dropDF)|z": {
+    "fuid->pcosgen": 0.565,
+    "pcosgen->fuid": 0.293
+  },
+  "aligned_labels(PCO_vs_Normal,dropDF)|coral": {
+    "fuid->pcosgen": 0.576,
+    "pcosgen->fuid": 0.514
+  },
+  "best_aligned_transfer": 0.576,
+  "verdict": "transfer remains weak even with aligned labels + CORAL -> genuine cross-site domain shift (honest limitation)",
+  "ts": "2026-05-26T14:53:41Z"
+}

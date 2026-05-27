@@ -1,0 +1,33 @@
+{
+  "spec": "ovary image-arm strengthening: residualization spectrum + cross-cohort + representational geometry",
+  "A_residualization_spectrum": {
+    "raw": 0.893640350877193,
+    "resid_geometry_only(w,h,aspect)": 0.9029385964912281,
+    "resid_geometry+global_intensity(+mean,std)": 0.8494298245614036,
+    "resid_full(+histogram)=track2A32": 0.7162719298245614,
+    "metadata_only": 0.6832017543859649
+  },
+  "B_cross_cohort": {
+    "train_fuid_test_pcosgen": 0.5508576596851495,
+    "train_pcosgen_test_fuid": 0.4371388630009319,
+    "within_fuid_PCOvsRest": 0.9246866431649041,
+    "within_pcosgen": 0.7979651710498703,
+    "note": "per-cohort z-score harmonization; shared axis = PCO/PCOS phenotype vs rest"
+  },
+  "C_representational_geometry": {
+    "RSA_feature_vs_label_spearman": 0.0680294020344729,
+    "RSA_perm_p": 0.0,
+    "reserve_aligned_principal_gradient_idx": 5,
+    "reserve_gradient_alignment_spearman": 0.37707365408989724,
+    "gradient_alignment_top5": [
+      0.377,
+      0.297,
+      0.275,
+      0.24,
+      0.204
+    ],
+    "intrinsic_dim_participation_ratio": 8.994329452514648,
+    "note": "RSA: feature geometry tracks reserve label; reserve aligns to a low-order principal gradient (cortical-gradient analog); participation ratio = effective representational dimensionality."
+  },
+  "ts": "2026-05-26T14:39:23Z"
+}
