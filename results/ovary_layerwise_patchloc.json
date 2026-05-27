@@ -377,5 +377,6 @@
     ]
   },
   "interpretation": "Reserve/PCO signal emerges in DINOv2 representation depth and concentrates spatially in patch tokens -> earns 'localization' claim beyond occlusion. Complements track2A23 occlusion.",
-  "ts": "2026-05-26T13:49:52Z"
+  "ts": "2026-05-26T13:49:52Z",
+  "_SUPERSEDED_NOTE": "The patch_localization.localized=true flag is an EARLIER EXPLORATORY result. A proper null test (ovary_residualize_locnull.json) showed the participation ratio does NOT beat random-direction/label-shuffle nulls. The spatial-localization claim is WITHDRAWN; treat the reserve signal as a deep-layer representational feature only, not a spatially localized one."
 }

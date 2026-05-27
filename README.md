@@ -21,8 +21,15 @@ together with a permutation null.
 
 A central methodological observation: under acquisition-confound removal (metadata residualization),
 the **generative distribution-transport signal survives** while an ordinary **discriminative probe
-collapses** toward its metadata baseline (replicated on two independent ovarian cohorts). Analyses are
-within-cohort / population-level (distinct populations; no patient-matched causal claim).
+collapses** toward its metadata baseline. This pattern is **qualitatively echoed (attenuated)** on a second
+independent ovarian cohort (PCOSGen: probe 0.80→0.67; OT-CFM transport retains permutation p<0.001 but at a
+smaller effect, d=0.79). It is a **cohort-specific** observation, not a cross-cohort generalizable biomarker:
+the reserve axis does not transfer across cohorts (best transfer 0.58; reserve directions near-orthogonal,
+cosine≈0.06). "Robust" here means surviving specified within-cohort nuisance residualization, not axis
+portability. Analyses are within-cohort / population-level (distinct populations; no patient-matched causal
+claim). Note: `results/ovary_layerwise_patchloc.json` contains an earlier exploratory patch-localization map
+whose `localized` flag was **not retained** after null testing (see `ovary_residualize_locnull.json`); no
+spatial-localization claim is made.
 
 ## Repository layout
 

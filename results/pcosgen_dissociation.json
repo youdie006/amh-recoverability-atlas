@@ -13,5 +13,6 @@
   "otcfm_residualized_null_mean": 0.5505150844653447,
   "dissociation_replicated": false,
   "note": "If probe drops under residualization but OT-CFM transport survives (p<0.05), the generative>discriminative robustness dissociation is replicated on a 2nd independent ovarian cohort.",
-  "ts": "2026-05-27T00:12:23Z"
+  "ts": "2026-05-27T00:12:23Z",
+  "_CLAIM_NOTE": "dissociation_replicated=false is a STRICT numeric threshold (required residualized transport d > 1.5x null). The QUALITATIVE pattern DOES replicate: the discriminative probe collapses toward its metadata baseline (0.80->0.67) while the OT-CFM transport retains permutation significance (residualized d=0.79, p<0.001, null mean 0.55) -- attenuated relative to fuid (1.90), so report as 'qualitatively echoed / attenuated', NOT 'replicated with equal effect'."
 }
