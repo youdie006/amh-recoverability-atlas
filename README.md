@@ -15,19 +15,23 @@ applied to every modality.
 
 | Modality (cohort) | AMH-linked signal? | Simplest sufficient model | Neural generative load-bearing? |
 |---|---|---|---|
-| Endocrine trajectory (Brigham) | yes, direct (measured AMH) | **masked Flow Matching** (AMH-cond d ≈ 1.12; permuted → ≈ 0; no permutation exceeded the observed statistic) | **YES** — affine ill-matched to sparse irregular series |
+| Endocrine trajectory (Brigham) | yes, direct (measured AMH) | **conditional-mean (+ Gaussian residual)**; masked FM is a convenient model under heavy missingness but **not load-bearing** (AMH-conditioned mean contrast d ≈ 1.35, patient-level permutation p = 0.032 at K=30 with the observed statistic ≈ 3× the largest null; a conditional-mean + Gaussian-residual baseline matches/beats FM on held-out CRPS/NLL) | **NO** |
 | Ovarian ultrasound (fuid / PCOSGen) | yes, AMH-linked reserve/PCOM phenotype (within-cohort AUROC ≈ 0.85; acquisition-conditioned, does not transfer) | **affine** (closed-form Gaussian-OT ≥ FM / OT-CFM / DDBM on held-out fidelity) | **NO** |
 | Embryo morphology (Wang / Kromp) | no recoverable signal (7 encoders, distribution-free n.s.); grade encoded 0.83–0.96; clinical check AMH→oocyte yield ρ≈0.46 vs →grade ρ≈0.02 | n/a (signal absent) | **NO** |
 
 The contribution is this map and its lesson: **AMH recoverability and the required model complexity are
 modality-dependent; model complexity should be justified by data geometry and observation structure, not by
-generative branding.** A neural generative model is load-bearing only where the data geometry demands it
-(sparse irregular trajectories); near-affine image representations are adequately served by a closed-form map,
-and embryo morphology carries no recoverable AMH signal. Earlier "generative-beats-discriminative" and
-generative-OOD claims were **retracted** after controls showed a non-linear discriminative probe recovers the
-same residual signal and the apparent OOD win was cross-dataset acquisition detection (see
-`results/*` notes). Analyses are representation-level and within-cohort (distinct public cohorts; no
-patient-matched or causal claim).
+generative branding.** Once matched baselines are used, **no neural generative model is strictly load-bearing on
+any modality**: ovarian ultrasound is affine-sufficient (closed-form Gaussian-OT ≥ FM / OT-CFM / DDBM on
+held-out fidelity); endocrine trajectories are conditional-mean-sufficient (masked FM is a convenient model
+under heavy missingness, but a conditional-mean + Gaussian-residual baseline matches/beats it on held-out
+CRPS/NLL); and embryo morphology carries no recoverable AMH signal. Earlier "generative-beats-discriminative",
+generative-OOD, and "FM is load-bearing on trajectories" claims were **retracted** after controls showed a
+non-linear discriminative probe recovers the same residual signal, the apparent OOD win was cross-dataset
+acquisition detection, and a conditional-mean + Gaussian baseline matches FM on held-out trajectory calibration
+(see `results/*` notes). The AMH-conditioned trajectory mean contrast is reported as a *model-implied
+conditional contrast*, not a causal counterfactual. Analyses are representation-level and within-cohort
+(distinct public cohorts; no patient-matched or causal claim).
 
 ## Repository layout
 
