@@ -1,0 +1,1221 @@
+{
+  "analysis": "target_substitution_cross_target_inflation",
+  "created_utc": "2026-05-31T18:49:01Z",
+  "settings": {
+    "seed": 20260601,
+    "n_splits": 5,
+    "n_bootstrap": 1000,
+    "registered_target": "registered_amh_tertile",
+    "probe_conventions": "StratifiedGroupKFold by patient_id; StandardScaler + PCA(32); train-fold class-prior baseline; R/H in fraction-of-entropy; patient-cluster bootstrap CI",
+    "feature_extraction": "none; cached np.load arrays only",
+    "menu_policy": "predeclared targets only; omitted unavailable age/site/batch arms are reported rather than substituted"
+  },
+  "column_audit": {
+    "index_path": "data/external/mendeley_wang_2026/embeddings/index_wang.csv",
+    "amh_recovered_path": "data/external/mendeley_wang_2026/amh_recovered_wang.csv",
+    "index_shape": [
+      2542,
+      9
+    ],
+    "amh_recovered_shape": [
+      2542,
+      6
+    ],
+    "index_columns": [
+      "Image",
+      "patient_id",
+      "embryo_idx",
+      "outcome",
+      "AMH_bucket",
+      "amh",
+      "age",
+      "split",
+      "prefix"
+    ],
+    "amh_recovered_columns": [
+      "Image",
+      "AMH_hypA",
+      "AMH_raw",
+      "AMH_bucket",
+      "AMH_hypB",
+      "is_palindrome"
+    ],
+    "same_image_order": true,
+    "same_amh_values": true,
+    "age_column_in_index": "age",
+    "age_column_in_amh_recovered": null,
+    "age_column_used": "age"
+  },
+  "targets": {
+    "registered_amh_tertile": {
+      "display_name": "REGISTERED serum AMH tertile",
+      "kind": "continuous_tertile",
+      "label_source_column": "amh",
+      "n": 2542,
+      "n_groups": 1415,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "class_counts": {
+        "0": 856,
+        "1": 841,
+        "2": 845
+      },
+      "target_entropy_bits": 1.5849221395516837,
+      "tertile_edges": [
+        1.91,
+        3.59
+      ],
+      "category_mapping": null,
+      "generation": null
+    },
+    "maternal_age_tertile": {
+      "display_name": "maternal age tertile",
+      "kind": "continuous_tertile",
+      "label_source_column": "age",
+      "n": 2542,
+      "n_groups": 1415,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "class_counts": {
+        "0": 872,
+        "1": 959,
+        "2": 711
+      },
+      "target_entropy_bits": 1.5741685915599268,
+      "tertile_edges": [
+        28.0,
+        32.0
+      ],
+      "category_mapping": null,
+      "generation": null
+    },
+    "patient_hash_3class": {
+      "display_name": "within-cohort patient_id SHA256 modulo-3 partition",
+      "kind": "nuisance_hash_partition",
+      "label_source_column": "patient_id",
+      "n": 2542,
+      "n_groups": 1415,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "class_counts": {
+        "0": 814,
+        "1": 805,
+        "2": 923
+      },
+      "target_entropy_bits": 1.5821121892746803,
+      "tertile_edges": null,
+      "category_mapping": null,
+      "generation": "SHA256(patient_id) modulo 3; fixed positive-control-for-inflation nuisance target"
+    },
+    "uniform_random_3class": {
+      "display_name": "uniform random 3-class label",
+      "kind": "random_floor",
+      "label_source_column": "generated",
+      "n": 2542,
+      "n_groups": 1415,
+      "classes": [
+        0,
+        1,
+        2
+      ],
+      "class_counts": {
+        "0": 818,
+        "1": 820,
+        "2": 904
+      },
+      "target_entropy_bits": 1.5833658143896376,
+      "tertile_edges": null,
+      "category_mapping": null,
+      "generation": "np.random.default_rng(20277618).integers(0, 3, n_rows)"
+    }
+  },
+  "omitted_targets": {
+    "clinic_site_batch": {
+      "status": "omitted",
+      "reason": "no clinic/site/batch column found",
+      "searched_tokens": [
+        "clinic",
+        "site",
+        "batch",
+        "center",
+        "centre",
+        "lab",
+        "laboratory"
+      ]
+    }
+  },
+  "encoders": {
+    "DINOv2-base": {
+      "path": "data/external/mendeley_wang_2026/embeddings/dinov2_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/dinov2_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 768,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "targets": {
+        "registered_amh_tertile": {
+          "R/H": -0.0061244632722522035,
+          "bootstrap_CI": [
+            -0.015639579389243836,
+            0.0028161972326175046
+          ],
+          "R_bits": -0.009706797433063668,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.1053133336505987,
+          "mdl_codelength_ratio": 1.0061244589130407,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "REGISTERED serum AMH tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "amh",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 856,
+              "1": 841,
+              "2": 845
+            },
+            "target_entropy_bits": 1.5849221395516837,
+            "tertile_edges": [
+              1.91,
+              3.59
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "maternal_age_tertile": {
+          "R/H": -0.019491212413744075,
+          "bootstrap_CI": [
+            -0.02654461405219315,
+            -0.01194261645249391
+          ],
+          "R_bits": -0.03068245439313887,
+          "target_entropy_bits": 1.5741685915599268,
+          "baseline_log_loss_nats": 1.091132108224295,
+          "model_log_loss_nats": 1.1123995649795584,
+          "mdl_codelength_ratio": 1.0194911840600804,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "maternal age tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "age",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 872,
+              "1": 959,
+              "2": 711
+            },
+            "target_entropy_bits": 1.5741685915599268,
+            "tertile_edges": [
+              28.0,
+              32.0
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "patient_hash_3class": {
+          "R/H": -0.015248480511818041,
+          "bootstrap_CI": [
+            -0.022821321653415813,
+            -0.007140473244921118
+          ],
+          "R_bits": -0.024124806885664738,
+          "target_entropy_bits": 1.5821121892746803,
+          "baseline_log_loss_nats": 1.096637604976288,
+          "model_log_loss_nats": 1.1133596468506397,
+          "mdl_codelength_ratio": 1.015248466584103,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "within-cohort patient_id SHA256 modulo-3 partition",
+            "kind": "nuisance_hash_partition",
+            "label_source_column": "patient_id",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 814,
+              "1": 805,
+              "2": 923
+            },
+            "target_entropy_bits": 1.5821121892746803,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "SHA256(patient_id) modulo 3; fixed positive-control-for-inflation nuisance target"
+          },
+          "null_like": true
+        },
+        "uniform_random_3class": {
+          "R/H": -0.013088383963940423,
+          "bootstrap_CI": [
+            -0.019541063157301718,
+            -0.006016231416091462
+          ],
+          "R_bits": -0.0207236997341088,
+          "target_entropy_bits": 1.5833658143896376,
+          "baseline_log_loss_nats": 1.0975082139506498,
+          "model_log_loss_nats": 1.1118727879921182,
+          "mdl_codelength_ratio": 1.0130883521953433,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2031,
+              "n_test": 511,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "uniform random 3-class label",
+            "kind": "random_floor",
+            "label_source_column": "generated",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 818,
+              "1": 820,
+              "2": 904
+            },
+            "target_entropy_bits": 1.5833658143896376,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "np.random.default_rng(20277618).integers(0, 3, n_rows)"
+          },
+          "null_like": true
+        }
+      },
+      "inflation": {
+        "registered_target": "registered_amh_tertile",
+        "registered_RH": -0.0061244632722522035,
+        "target_agnostic_max_target": "registered_amh_tertile",
+        "target_agnostic_max_RH": -0.0061244632722522035,
+        "inflation_statistic": 0.0,
+        "max_alternative_target": "uniform_random_3class",
+        "max_alternative_RH": -0.013088383963940423,
+        "max_alternative_minus_registered": -0.006963920691688219
+      },
+      "status": "used",
+      "reason": null
+    },
+    "CLIP-L": {
+      "path": "data/external/mendeley_wang_2026/embeddings/clipl_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/clipl_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "targets": {
+        "registered_amh_tertile": {
+          "R/H": -0.012009627807830036,
+          "bootstrap_CI": [
+            -0.020543461049230636,
+            -0.003719514583404205
+          ],
+          "R_bits": -0.01903432500040538,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.1117786830854968,
+          "mdl_codelength_ratio": 1.0120096192597328,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "REGISTERED serum AMH tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "amh",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 856,
+              "1": 841,
+              "2": 845
+            },
+            "target_entropy_bits": 1.5849221395516837,
+            "tertile_edges": [
+              1.91,
+              3.59
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "maternal_age_tertile": {
+          "R/H": -0.01369671181193347,
+          "bootstrap_CI": [
+            -0.021510823410780235,
+            -0.005136067399488786
+          ],
+          "R_bits": -0.021560933541993524,
+          "target_entropy_bits": 1.5741685915599268,
+          "baseline_log_loss_nats": 1.091132108224295,
+          "model_log_loss_nats": 1.1060770085191682,
+          "mdl_codelength_ratio": 1.0136966918874695,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "maternal age tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "age",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 872,
+              "1": 959,
+              "2": 711
+            },
+            "target_entropy_bits": 1.5741685915599268,
+            "tertile_edges": [
+              28.0,
+              32.0
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "patient_hash_3class": {
+          "R/H": -0.019094382671787515,
+          "bootstrap_CI": [
+            -0.027671469222947297,
+            -0.011050869297239547
+          ],
+          "R_bits": -0.030209455571710266,
+          "target_entropy_bits": 1.5821121892746803,
+          "baseline_log_loss_nats": 1.096637604976288,
+          "model_log_loss_nats": 1.11757720393207,
+          "mdl_codelength_ratio": 1.0190943652312878,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "within-cohort patient_id SHA256 modulo-3 partition",
+            "kind": "nuisance_hash_partition",
+            "label_source_column": "patient_id",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 814,
+              "1": 805,
+              "2": 923
+            },
+            "target_entropy_bits": 1.5821121892746803,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "SHA256(patient_id) modulo 3; fixed positive-control-for-inflation nuisance target"
+          },
+          "null_like": true
+        },
+        "uniform_random_3class": {
+          "R/H": -0.010860207885549117,
+          "bootstrap_CI": [
+            -0.018291721430461098,
+            -0.0036316198802989748
+          ],
+          "R_bits": -0.01719568190314324,
+          "target_entropy_bits": 1.5833658143896376,
+          "baseline_log_loss_nats": 1.0975082139506498,
+          "model_log_loss_nats": 1.1094273523796192,
+          "mdl_codelength_ratio": 1.0108601815252614,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2031,
+              "n_test": 511,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "uniform random 3-class label",
+            "kind": "random_floor",
+            "label_source_column": "generated",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 818,
+              "1": 820,
+              "2": 904
+            },
+            "target_entropy_bits": 1.5833658143896376,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "np.random.default_rng(20277618).integers(0, 3, n_rows)"
+          },
+          "null_like": true
+        }
+      },
+      "inflation": {
+        "registered_target": "registered_amh_tertile",
+        "registered_RH": -0.012009627807830036,
+        "target_agnostic_max_target": "uniform_random_3class",
+        "target_agnostic_max_RH": -0.010860207885549117,
+        "inflation_statistic": 0.0011494199222809188,
+        "max_alternative_target": "uniform_random_3class",
+        "max_alternative_RH": -0.010860207885549117,
+        "max_alternative_minus_registered": 0.0011494199222809188
+      },
+      "status": "used",
+      "reason": null
+    },
+    "FEMI": {
+      "path": "data/external/mendeley_wang_2026/embeddings/femi_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/femi_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "targets": {
+        "registered_amh_tertile": {
+          "R/H": -0.020126912309934988,
+          "bootstrap_CI": [
+            -0.029174892806071093,
+            -0.011223003125668842
+          ],
+          "R_bits": -0.03189958892083128,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.1206962044990996,
+          "mdl_codelength_ratio": 1.020126897984195,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "REGISTERED serum AMH tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "amh",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 856,
+              "1": 841,
+              "2": 845
+            },
+            "target_entropy_bits": 1.5849221395516837,
+            "tertile_edges": [
+              1.91,
+              3.59
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "maternal_age_tertile": {
+          "R/H": -0.021500100758203137,
+          "bootstrap_CI": [
+            -0.0287350622741731,
+            -0.014035108906115716
+          ],
+          "R_bits": -0.033844783328937145,
+          "target_entropy_bits": 1.5741685915599268,
+          "baseline_log_loss_nats": 1.091132108224295,
+          "model_log_loss_nats": 1.11459152436541,
+          "mdl_codelength_ratio": 1.0215000694822305,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "maternal age tertile",
+            "kind": "continuous_tertile",
+            "label_source_column": "age",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 872,
+              "1": 959,
+              "2": 711
+            },
+            "target_entropy_bits": 1.5741685915599268,
+            "tertile_edges": [
+              28.0,
+              32.0
+            ],
+            "category_mapping": null,
+            "generation": null
+          },
+          "null_like": true
+        },
+        "patient_hash_3class": {
+          "R/H": -0.017377220293610312,
+          "bootstrap_CI": [
+            -0.02448180797791029,
+            -0.009189922416019273
+          ],
+          "R_bits": -0.027492712042232217,
+          "target_entropy_bits": 1.5821121892746803,
+          "baseline_log_loss_nats": 1.096637604976288,
+          "model_log_loss_nats": 1.1156941008143078,
+          "mdl_codelength_ratio": 1.0173772044215388,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "within-cohort patient_id SHA256 modulo-3 partition",
+            "kind": "nuisance_hash_partition",
+            "label_source_column": "patient_id",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 814,
+              "1": 805,
+              "2": 923
+            },
+            "target_entropy_bits": 1.5821121892746803,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "SHA256(patient_id) modulo 3; fixed positive-control-for-inflation nuisance target"
+          },
+          "null_like": true
+        },
+        "uniform_random_3class": {
+          "R/H": -0.012514828543150162,
+          "bootstrap_CI": [
+            -0.01954153604274611,
+            -0.006050727129760427
+          ],
+          "R_bits": -0.01981555168817164,
+          "target_entropy_bits": 1.5833658143896376,
+          "baseline_log_loss_nats": 1.0975082139506498,
+          "model_log_loss_nats": 1.1112433077345458,
+          "mdl_codelength_ratio": 1.0125147981667075,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + multinomial LogisticRegression(lbfgs)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2031,
+              "n_test": 511,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2035,
+              "n_test": 507,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "target": {
+            "display_name": "uniform random 3-class label",
+            "kind": "random_floor",
+            "label_source_column": "generated",
+            "n": 2542,
+            "n_groups": 1415,
+            "classes": [
+              0,
+              1,
+              2
+            ],
+            "class_counts": {
+              "0": 818,
+              "1": 820,
+              "2": 904
+            },
+            "target_entropy_bits": 1.5833658143896376,
+            "tertile_edges": null,
+            "category_mapping": null,
+            "generation": "np.random.default_rng(20277618).integers(0, 3, n_rows)"
+          },
+          "null_like": true
+        }
+      },
+      "inflation": {
+        "registered_target": "registered_amh_tertile",
+        "registered_RH": -0.020126912309934988,
+        "target_agnostic_max_target": "uniform_random_3class",
+        "target_agnostic_max_RH": -0.012514828543150162,
+        "inflation_statistic": 0.007612083766784825,
+        "max_alternative_target": "uniform_random_3class",
+        "max_alternative_RH": -0.012514828543150162,
+        "max_alternative_minus_registered": 0.007612083766784825
+      },
+      "status": "used",
+      "reason": null
+    }
+  },
+  "verdict": {
+    "strength": "weak",
+    "n_encoders_with_positive_inflation": 2,
+    "n_encoders_evaluated": 3,
+    "n_target_agnostic_max_null_like": 3,
+    "statement": "The target-agnostic maximum exceeded registered AMH for 2/3 encoders; inflation statistic range 0.000000 to 0.007612 R/H. The menu maximum is null-like for every used encoder by R/H<=0 or CI crossing 0."
+  }
+}

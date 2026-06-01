@@ -1,0 +1,348 @@
+{
+  "checks": [
+    {
+      "abs_diff": 0.0,
+      "existing": 0.00666,
+      "name": "embryo_image_to_wang_amh_tertile.R_fixed_linear.bits",
+      "reproduced": 0.00666,
+      "status": "PASS",
+      "tolerance": 0.01
+    },
+    {
+      "abs_diff": 0.0,
+      "existing": 0.004202,
+      "name": "embryo_image_to_wang_amh_tertile.R_fixed_linear.fraction_of_entropy",
+      "reproduced": 0.004202,
+      "status": "PASS",
+      "tolerance": 0.01
+    },
+    {
+      "abs_diff": 0.0,
+      "existing": 0.138191,
+      "name": "endocrine_trajectory_to_brigham_amh_tertile.V_conditional_beyond_age.bits",
+      "reproduced": 0.138191,
+      "status": "PASS",
+      "tolerance": 0.01
+    },
+    {
+      "abs_diff": 0.0,
+      "existing": 0.087189,
+      "name": "endocrine_trajectory_to_brigham_amh_tertile.V_conditional_beyond_age.fraction_of_entropy",
+      "reproduced": 0.087189,
+      "status": "PASS",
+      "tolerance": 0.01
+    },
+    {
+      "abs_diff": 0.0,
+      "empirical_p_value": 0.333333,
+      "existing": 0.0,
+      "name": "placebo_random_feature_near_null.fraction_of_entropy_abs",
+      "p_value_requirement": "> 0.05",
+      "reproduced": 0.0,
+      "status": "PASS",
+      "tolerance": 0.1
+    }
+  ],
+  "created_unix_seconds": 1780179739.8560555,
+  "observed_results": {
+    "embryo_image_to_wang_amh_tertile": {
+      "R": {
+        "baseline_log_loss_nats": 1.098614,
+        "bits": 0.00666,
+        "fraction_of_entropy": 0.004202,
+        "model_log_loss_nats": 1.093998
+      },
+      "class_counts": {
+        "0": 848,
+        "1": 847,
+        "2": 847
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "n_test": 509,
+          "n_train": 2033,
+          "n_train_classes": 3,
+          "pca_components": 32,
+          "prior_blend_alpha": 0.45
+        },
+        {
+          "fold": 2,
+          "n_test": 509,
+          "n_train": 2033,
+          "n_train_classes": 3,
+          "pca_components": 32,
+          "prior_blend_alpha": 0.45
+        },
+        {
+          "fold": 3,
+          "n_test": 508,
+          "n_train": 2034,
+          "n_train_classes": 3,
+          "pca_components": 32,
+          "prior_blend_alpha": 0.25
+        },
+        {
+          "fold": 4,
+          "n_test": 508,
+          "n_train": 2034,
+          "n_train_classes": 3,
+          "pca_components": 32,
+          "prior_blend_alpha": 0.15
+        },
+        {
+          "fold": 5,
+          "n_test": 508,
+          "n_train": 2034,
+          "n_train_classes": 3,
+          "pca_components": 32,
+          "prior_blend_alpha": 0.25
+        }
+      ],
+      "mode": "marginal",
+      "n": 2542,
+      "n_classes": 3,
+      "n_groups": 1415,
+      "permutation_null": {
+        "alternative": "greater",
+        "empirical_p_value": null,
+        "fraction_mean": null,
+        "fraction_p95_floor": null,
+        "fraction_sd": null,
+        "n_permutations": 0.0,
+        "statistic_mean": null,
+        "statistic_p95_raw": null,
+        "statistic_sd": null
+      },
+      "probe": {
+        "model": "StandardScaler + PCA if needed + LogisticRegression; conditional baseline is fit as baseline-only versus baseline+features",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "splitter": "StratifiedGroupKFold"
+      },
+      "target_entropy_bits": 1.584962,
+      "task": "classification"
+    },
+    "endocrine_trajectory_to_brigham_amh_tertile_conditional": {
+      "R": {
+        "augmented_name": "baseline_plus_features",
+        "baseline_log_loss_nats": 1.042816,
+        "baseline_name": "baseline",
+        "bits": 0.138191,
+        "fraction_of_entropy": 0.087189,
+        "model_log_loss_nats": 0.94703
+      },
+      "class_counts": {
+        "0": 816,
+        "1": 816,
+        "2": 816
+      },
+      "folds": {
+        "augmented_folds": [
+          {
+            "fold": 1,
+            "modality_pca_components": 32,
+            "n_test": 492,
+            "n_train": 1956,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.8
+          },
+          {
+            "fold": 2,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.8
+          },
+          {
+            "fold": 3,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.8
+          },
+          {
+            "fold": 4,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.8
+          },
+          {
+            "fold": 5,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.9
+          }
+        ],
+        "baseline_folds": [
+          {
+            "fold": 1,
+            "modality_pca_components": 32,
+            "n_test": 492,
+            "n_train": 1956,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.95
+          },
+          {
+            "fold": 2,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 1.0
+          },
+          {
+            "fold": 3,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.8
+          },
+          {
+            "fold": 4,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 0.85
+          },
+          {
+            "fold": 5,
+            "modality_pca_components": 32,
+            "n_test": 489,
+            "n_train": 1959,
+            "n_train_classes": 3,
+            "prior_blend_alpha": 1.0
+          }
+        ],
+        "feature_transform": "baseline covariates are scaled separately and always retained; feature block is scaled/PCA-compressed before concatenation",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "splitter": "StratifiedGroupKFold"
+      },
+      "mode": "conditional",
+      "n": 2448,
+      "n_classes": 3,
+      "n_groups": 1901,
+      "permutation_null": {
+        "alternative": "greater",
+        "empirical_p_value": null,
+        "fraction_mean": null,
+        "fraction_p95_floor": null,
+        "fraction_sd": null,
+        "n_permutations": 0.0,
+        "statistic_mean": null,
+        "statistic_p95_raw": null,
+        "statistic_sd": null
+      },
+      "probe": {
+        "model": "StandardScaler + PCA if needed + LogisticRegression; conditional baseline is fit as baseline-only versus baseline+features",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "splitter": "StratifiedGroupKFold"
+      },
+      "target_entropy_bits": 1.584963,
+      "task": "classification"
+    },
+    "placebo_random_feature": {
+      "R": {
+        "baseline_log_loss_nats": 1.098612,
+        "bits": 0.0,
+        "fraction_of_entropy": 0.0,
+        "model_log_loss_nats": 1.098612
+      },
+      "class_counts": {
+        "0": 40,
+        "1": 40,
+        "2": 40
+      },
+      "folds": [
+        {
+          "fold": 1,
+          "n_test": 24,
+          "n_train": 96,
+          "n_train_classes": 3,
+          "pca_components": null,
+          "prior_blend_alpha": 0.0
+        },
+        {
+          "fold": 2,
+          "n_test": 24,
+          "n_train": 96,
+          "n_train_classes": 3,
+          "pca_components": null,
+          "prior_blend_alpha": 0.0
+        },
+        {
+          "fold": 3,
+          "n_test": 24,
+          "n_train": 96,
+          "n_train_classes": 3,
+          "pca_components": null,
+          "prior_blend_alpha": 0.0
+        },
+        {
+          "fold": 4,
+          "n_test": 24,
+          "n_train": 96,
+          "n_train_classes": 3,
+          "pca_components": null,
+          "prior_blend_alpha": 0.0
+        },
+        {
+          "fold": 5,
+          "n_test": 24,
+          "n_train": 96,
+          "n_train_classes": 3,
+          "pca_components": null,
+          "prior_blend_alpha": 0.0
+        }
+      ],
+      "mode": "marginal",
+      "n": 120,
+      "n_classes": 3,
+      "n_groups": 120,
+      "permutation_null": {
+        "alternative": "greater",
+        "empirical_p_value": 0.333333,
+        "fraction_mean": -0.003892,
+        "fraction_p95_floor": 0.009872,
+        "fraction_sd": 0.018623,
+        "n_permutations": 20.0,
+        "statistic_mean": -0.006169,
+        "statistic_p95_floor": 0.015646,
+        "statistic_p95_raw": 0.015646,
+        "statistic_sd": 0.029516
+      },
+      "probe": {
+        "model": "StandardScaler + PCA if needed + LogisticRegression; conditional baseline is fit as baseline-only versus baseline+features",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "splitter": "StratifiedGroupKFold"
+      },
+      "target_entropy_bits": 1.584963,
+      "task": "classification"
+    }
+  },
+  "overall_status": "PASS",
+  "package": "reserve_audit",
+  "runtime_seconds": 24.01851177215576,
+  "settings": {
+    "n_splits": 5,
+    "note": "Existing 2000-shuffle permutation p-values are not recomputed here; validation targets the reusable point-estimate recoverability protocol plus a small placebo sanity permutation.",
+    "pca_components": 32,
+    "placebo_n_permutations": 20,
+    "point_estimate_n_permutations": 0,
+    "seed": 20260530,
+    "tolerance_rule": "PASS if abs_diff < 0.01 for reproduced manuscript-node values; placebo PASS if |fraction| < 0.10 and empirical p > 0.05"
+  },
+  "sources": {
+    "conditional_existing": "results/diagnostics/atlas_conditional_probing.json",
+    "legacy_data_prep_reference": "scripts/recoverability_atlas.py",
+    "recoverability_existing": "results/diagnostics/recoverability_atlas_v2_permhardened.json"
+  },
+  "spec": "reserve_audit harness validation against existing diagnostic artifacts"
+}

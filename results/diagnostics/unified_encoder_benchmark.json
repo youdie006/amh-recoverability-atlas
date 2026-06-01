@@ -1,0 +1,1357 @@
+{
+  "benchmark": "unified_frozen_encoder_recoverability",
+  "created_utc": "2026-05-31T17:42:29Z",
+  "settings": {
+    "seed": 20260601,
+    "n_splits": 5,
+    "n_bootstrap": 1000,
+    "pca_components": 32,
+    "verified_existing_paths": true,
+    "feature_extraction": "none; np.load cached arrays only",
+    "fold_seed_policy": "one seed per target; same folds and same fixed permuted control labels across encoders within target"
+  },
+  "embryo_amh": {
+    "target": "AMH tertile",
+    "n": 2542,
+    "n_groups": 1415,
+    "class_names": {
+      "0": "low_AMH",
+      "1": "mid_AMH",
+      "2": "high_AMH"
+    },
+    "class_counts": {
+      "0": 856,
+      "1": 841,
+      "2": 845
+    },
+    "target_entropy_bits": 1.5849221395516837,
+    "tertile_edges_amh": [
+      1.91,
+      3.59
+    ],
+    "label_source": "data/external/mendeley_wang_2026/embeddings/index_wang.csv",
+    "label_audit_source": "data/external/mendeley_wang_2026/amh_recovered_wang.csv",
+    "alignment_checks": {
+      "index_rows": 2542,
+      "amh_rows": 2542,
+      "same_image_order": true,
+      "same_amh_values": true
+    },
+    "encoders": {
+      "DINOv2-base": {
+        "target": "AMH tertile",
+        "path": "data/external/mendeley_wang_2026/embeddings/dinov2_z_wang.npy",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 768,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        },
+        "R/H": -0.0061244632722522035,
+        "bootstrap_CI": [
+          -0.015639579389243836,
+          0.0028161972326175046
+        ],
+        "control_task_selectivity": 0.009185454036413134,
+        "control_RH": -0.015309917308665337,
+        "R_bits": -0.009706797433063668,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1053133336505987,
+        "mdl_codelength_ratio": 1.0061244589130407,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.015309917308665337,
+          "R_bits": -0.024265026897209222,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1165219645124622,
+          "mdl_codelength_ratio": 1.0152943468524105
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": null
+      },
+      "CLIP-L": {
+        "target": "AMH tertile",
+        "path": "data/external/mendeley_wang_2026/embeddings/clipl_z_wang.npy",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        },
+        "R/H": -0.012009627807830036,
+        "bootstrap_CI": [
+          -0.020543461049230636,
+          -0.003719514583404205
+        ],
+        "control_task_selectivity": -0.0003325563692816915,
+        "control_RH": -0.011677071438548344,
+        "R_bits": -0.01903432500040538,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1117786830854968,
+        "mdl_codelength_ratio": 1.0120096192597328,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.011677071438548344,
+          "R_bits": -0.0185072490480819,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.112530977030049,
+          "mdl_codelength_ratio": 1.0116651956506943
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": null
+      },
+      "FEMI": {
+        "target": "AMH tertile",
+        "path": "data/external/mendeley_wang_2026/embeddings/femi_z_wang.npy",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        },
+        "R/H": -0.020126912309934988,
+        "bootstrap_CI": [
+          -0.029174892806071093,
+          -0.011223003125668842
+        ],
+        "control_task_selectivity": -0.004204413926794326,
+        "control_RH": -0.015922498383140662,
+        "R_bits": -0.03189958892083128,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1206962044990996,
+        "mdl_codelength_ratio": 1.020126897984195,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.015922498383140662,
+          "R_bits": -0.025235920204415525,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1171949364709768,
+          "mdl_codelength_ratio": 1.0159063049211157
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": null
+      },
+      "DINOv2-large": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2g_dinov2_large_encoder/dinov2_large_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.010497517867407598,
+        "bootstrap_CI": [
+          -0.019302295187366064,
+          -0.0017950672261066816
+        ],
+        "control_task_selectivity": 0.008538112197740044,
+        "control_RH": -0.019035630065147642,
+        "R_bits": -0.01663774847839368,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1101175028262682,
+        "mdl_codelength_ratio": 1.0104975103955853,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.019035630065147642,
+          "R_bits": -0.03016999153056816,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1206149740993812,
+          "mdl_codelength_ratio": 1.0190162704932284
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "DINOv2-giant": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2_dinov2_giant_encoder/dinov2_giant_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1536,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.00669627667625815,
+        "bootstrap_CI": [
+          -0.016176446315510844,
+          0.0032030235218930662
+        ],
+        "control_task_selectivity": 0.011818431396121567,
+        "control_RH": -0.018514708072379718,
+        "R_bits": -0.010613077156765105,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.105941518885881,
+        "mdl_codelength_ratio": 1.0066962719100467,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.018514708072379718,
+          "R_bits": -0.02934437073125089,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1200426973701227,
+          "mdl_codelength_ratio": 1.018495878287326
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "DINOv3-ViTB": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2A5_dinov3_vitb/dinov3_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 768,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.0061043239137626125,
+        "bootstrap_CI": [
+          -0.015544110920302657,
+          0.0027834526502058077
+        ],
+        "control_task_selectivity": 0.011516543562470383,
+        "control_RH": -0.017620867476232996,
+        "R_bits": -0.009674878117917148,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1052912088672995,
+        "mdl_codelength_ratio": 1.0061043195688857,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.017620867476232996,
+          "R_bits": -0.027927702981187876,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1190607381133764,
+          "mdl_codelength_ratio": 1.0176029467428496
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "DINOv3-strengthened": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2n_dinov3_strengthened/dinov3_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.006671463728491094,
+        "bootstrap_CI": [
+          -0.01604200062915083,
+          0.0031146366036059053
+        ],
+        "control_task_selectivity": 0.012618813864190444,
+        "control_RH": -0.019290277592681537,
+        "R_bits": -0.010573750566501557,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1059142597707188,
+        "mdl_codelength_ratio": 1.0066714589799408,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.019290277592681537,
+          "R_bits": -0.030573588034738725,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1208947258783308,
+          "mdl_codelength_ratio": 1.0192706590397302
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "V-JEPA2": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2c_vjepa2_encoder/vjepa2_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.012319166793181147,
+        "bootstrap_CI": [
+          -0.02114988898598851,
+          -0.0030136676193550766
+        ],
+        "control_task_selectivity": -0.001849377852139296,
+        "control_RH": -0.010469788941041851,
+        "R_bits": -0.019524920191342717,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1121187377588913,
+        "mdl_codelength_ratio": 1.0123191580247632,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.010469788941041851,
+          "R_bits": -0.016593800289090608,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1112046754176084,
+          "mdl_codelength_ratio": 1.0104591409808068
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "SigLIP2": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2x_siglip2_encoder/siglip2_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.009604716563827876,
+        "bootstrap_CI": [
+          -0.017603147501944826,
+          -0.0017700906551652328
+        ],
+        "control_task_selectivity": 0.00419524767505015,
+        "control_RH": -0.013799964238878026,
+        "R_bits": -0.015222727926129574,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.109136685320032,
+        "mdl_codelength_ratio": 1.0096047097274752,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.013799964238878026,
+          "R_bits": -0.021871868847219283,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.1148631537574774,
+          "mdl_codelength_ratio": 1.0137859294315588
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      },
+      "RAD-DINO": {
+        "target": "AMH tertile",
+        "path": "results/synth/track2y_raddino_encoder/raddino_features.npz",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 768,
+        "format": "npz",
+        "array_key": "wang",
+        "ids_key": "wang_index",
+        "alignment": {
+          "method": "ids_to_label_index",
+          "ids_key": "wang_index",
+          "n_ids": 2542,
+          "n_label_ids": 2542,
+          "ids_match_set": true,
+          "reordered": false,
+          "missing_label_ids": [],
+          "extra_pack_ids": [],
+          "n_missing_label_ids": 0,
+          "n_extra_pack_ids": 0
+        },
+        "R/H": -0.015903960641112956,
+        "bootstrap_CI": [
+          -0.024173143312896137,
+          -0.007106820403230705
+        ],
+        "control_task_selectivity": -0.0022161316741141374,
+        "control_RH": -0.013687828966998819,
+        "R_bits": -0.025206539326658513,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1160569360435508,
+        "mdl_codelength_ratio": 1.015903949321145,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.013687828966998819,
+          "R_bits": -0.02169414317219328,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.0997027295324504,
+          "model_log_loss_nats": 1.11473996370692,
+          "mdl_codelength_ratio": 1.0136739082032313
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 2034,
+            "n_test": 508,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 2033,
+            "n_test": 509,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": [
+          "kromp",
+          "kromp_index",
+          "wang",
+          "wang_index"
+        ]
+      }
+    }
+  },
+  "ovary_fuid_phenotype": {
+    "target": "FUID phenotype",
+    "n": 301,
+    "n_groups": 301,
+    "class_names": {
+      "0": "Normal",
+      "1": "Dominant",
+      "2": "PCO"
+    },
+    "class_counts": {
+      "0": 41,
+      "1": 144,
+      "2": 116
+    },
+    "target_entropy_bits": 1.4307803816373341,
+    "label_source": "data/external/ovarian_us/fuid/extracted",
+    "alignment_checks": {
+      "label_order": "sorted recursive image paths by Normal, Dominant_Follicle, PCO; same source used by ovary phenotype probe",
+      "n_image_paths": 301
+    },
+    "encoder_discovery": {
+      "dinov2": {
+        "requested_path": "results/diagnostics/cache/fuid_dinov2_cls.npy",
+        "requested_np_load_verified": false,
+        "requested_shape": null,
+        "searched_cache_glob": "results/diagnostics/cache/*fuid*.npy",
+        "candidates": [
+          {
+            "path": "results/diagnostics/cache/fuid_M.npy",
+            "np_load_verified": true,
+            "shape": [
+              301,
+              13
+            ],
+            "error": null,
+            "accepted_as_dinov2_candidate": false
+          },
+          {
+            "path": "results/diagnostics/cache/fuid_Z.npy",
+            "np_load_verified": true,
+            "shape": [
+              301,
+              768
+            ],
+            "error": null,
+            "accepted_as_dinov2_candidate": true
+          }
+        ],
+        "selected_path": "results/diagnostics/cache/fuid_Z.npy",
+        "reason": "selected existing 301x768 fuid_Z.npy fallback after requested DINOv2 path was absent"
+      }
+    },
+    "encoders": {
+      "DINOv2": {
+        "target": "FUID phenotype",
+        "path": "results/diagnostics/cache/fuid_Z.npy",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 301,
+        "dim": 768,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        },
+        "R/H": 0.34009181534336175,
+        "bootstrap_CI": [
+          0.17946586502846246,
+          0.4869409629520958
+        ],
+        "control_task_selectivity": 0.5327108115581269,
+        "control_RH": -0.19261899621476522,
+        "R_bits": 0.4865966973487089,
+        "target_entropy_bits": 1.4307803816373341,
+        "baseline_log_loss_nats": 0.9918838431075142,
+        "model_log_loss_nats": 0.6546007142704756,
+        "mdl_codelength_ratio": 0.6599570290606305,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.19261899621476522,
+          "R_bits": -0.275595480914762,
+          "target_entropy_bits": 1.4307803816373341,
+          "baseline_log_loss_nats": 0.9979449505343467,
+          "model_log_loss_nats": 1.1889731811054762,
+          "mdl_codelength_ratio": 1.1914216114514573
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 240,
+            "n_test": 61,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": null
+      },
+      "USF-MAE": {
+        "target": "FUID phenotype",
+        "path": "results/diagnostics/cache/fuid_usfmae_cls.npy",
+        "path_note": null,
+        "status": "used",
+        "reason": null,
+        "n": 301,
+        "dim": 768,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        },
+        "R/H": 0.2974159690776481,
+        "bootstrap_CI": [
+          0.08182958533224505,
+          0.4844896600882545
+        ],
+        "control_task_selectivity": 0.47804906985265755,
+        "control_RH": -0.18063310077500944,
+        "R_bits": 0.4255369337419549,
+        "target_entropy_bits": 1.4307803816373341,
+        "baseline_log_loss_nats": 0.9918838431075142,
+        "model_log_loss_nats": 0.6969241172601539,
+        "mdl_codelength_ratio": 0.7026267461689176,
+        "control_task": {
+          "label_permutation": "single fixed row-level random permutation preserving class counts",
+          "R/H": -0.18063310077500944,
+          "R_bits": -0.25844629686320303,
+          "target_entropy_bits": 1.4307803816373341,
+          "baseline_log_loss_nats": 0.9979449505343467,
+          "model_log_loss_nats": 1.1770862725312345,
+          "mdl_codelength_ratio": 1.1795102243875948
+        },
+        "probe": {
+          "splitter": "StratifiedGroupKFold",
+          "n_splits": 5,
+          "model": "StandardScaler + PCA(min(32, n_features, n_train-1)) + multinomial LogisticRegression(lbfgs)",
+          "baseline": "train-fold class prior with Jeffreys smoothing"
+        },
+        "folds": [
+          {
+            "fold": 1,
+            "n_train": 240,
+            "n_test": 61,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 2,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 3,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 4,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          },
+          {
+            "fold": 5,
+            "n_train": 241,
+            "n_test": 60,
+            "n_train_classes": 3,
+            "pca_components": 32
+          }
+        ],
+        "np_load_verified": true,
+        "npz_keys": null
+      }
+    }
+  },
+  "cross_encoder_geometry": {
+    "encoder_names": [
+      "DINOv2-base",
+      "CLIP-L",
+      "FEMI",
+      "DINOv2-large",
+      "DINOv2-giant",
+      "DINOv3-ViTB",
+      "DINOv3-strengthened",
+      "V-JEPA2",
+      "SigLIP2",
+      "RAD-DINO"
+    ],
+    "matrix": [
+      [
+        1.0,
+        0.4645940643279225,
+        0.1885172699559263,
+        0.5583482018893787,
+        0.6524129248979254,
+        0.6628741301987294,
+        0.66026735857429,
+        0.2970089794495569,
+        0.3986471225687382,
+        0.2988606277859453
+      ],
+      [
+        0.4645940643279225,
+        1.0,
+        0.18210619725385035,
+        0.5063819048097831,
+        0.5384841892149039,
+        0.4997511137153456,
+        0.49304721664543816,
+        0.3315966017076369,
+        0.48848083482828397,
+        0.37173822592785916
+      ],
+      [
+        0.1885172699559263,
+        0.18210619725385035,
+        1.0,
+        0.21249374212944788,
+        0.2569870907410102,
+        0.22445851405737666,
+        0.2638689109571509,
+        0.21832018493162625,
+        0.20245061033970138,
+        0.1659211086993308
+      ],
+      [
+        0.5583482018893787,
+        0.5063819048097831,
+        0.21249374212944788,
+        1.0,
+        0.8873505438483565,
+        0.6046366446721667,
+        0.5462040214524193,
+        0.4325558702709446,
+        0.5231049072366575,
+        0.491246892734857
+      ],
+      [
+        0.6524129248979254,
+        0.5384841892149039,
+        0.2569870907410102,
+        0.8873505438483565,
+        1.0,
+        0.6640249684694509,
+        0.6338975470794804,
+        0.43475501757047663,
+        0.5401538843055271,
+        0.48134363935891583
+      ],
+      [
+        0.6628741301987294,
+        0.4997511137153456,
+        0.22445851405737666,
+        0.6046366446721667,
+        0.6640249684694509,
+        1.0,
+        0.7201283450085608,
+        0.42703006916125297,
+        0.5564403921816039,
+        0.3741313929478948
+      ],
+      [
+        0.66026735857429,
+        0.49304721664543816,
+        0.2638689109571509,
+        0.5462040214524193,
+        0.6338975470794804,
+        0.7201283450085608,
+        1.0,
+        0.3703466037883573,
+        0.48541807378380797,
+        0.3514180753497642
+      ],
+      [
+        0.2970089794495569,
+        0.3315966017076369,
+        0.21832018493162625,
+        0.4325558702709446,
+        0.43475501757047663,
+        0.42703006916125297,
+        0.3703466037883573,
+        1.0,
+        0.4135319478890224,
+        0.30731381525315776
+      ],
+      [
+        0.3986471225687382,
+        0.48848083482828397,
+        0.20245061033970138,
+        0.5231049072366575,
+        0.5401538843055271,
+        0.5564403921816039,
+        0.48541807378380797,
+        0.4135319478890224,
+        1.0,
+        0.3584766050867917
+      ],
+      [
+        0.2988606277859453,
+        0.37173822592785916,
+        0.1659211086993308,
+        0.491246892734857,
+        0.48134363935891583,
+        0.3741313929478948,
+        0.3514180753497642,
+        0.30731381525315776,
+        0.3584766050867917,
+        1.0
+      ]
+    ],
+    "recoverability_tracking": {
+      "mean_pairwise_CKA": {
+        "DINOv2-base": 0.4646145199609347,
+        "CLIP-L": 0.43068670538122483,
+        "FEMI": 0.21279151434060234,
+        "DINOv2-large": 0.5291469698937791,
+        "DINOv2-giant": 0.5654899783873385,
+        "DINOv3-ViTB": 0.5259417300458202,
+        "DINOv3-strengthened": 0.5027329058488077,
+        "V-JEPA2": 0.35916212111355905,
+        "SigLIP2": 0.44074493091334827,
+        "RAD-DINO": 0.3556055981271686
+      },
+      "R/H": {
+        "DINOv2-base": -0.0061244632722522035,
+        "CLIP-L": -0.012009627807830036,
+        "FEMI": -0.020126912309934988,
+        "DINOv2-large": -0.010497517867407598,
+        "DINOv2-giant": -0.00669627667625815,
+        "DINOv3-ViTB": -0.0061043239137626125,
+        "DINOv3-strengthened": -0.006671463728491094,
+        "V-JEPA2": -0.012319166793181147,
+        "SigLIP2": -0.009604716563827876,
+        "RAD-DINO": -0.015903960641112956
+      },
+      "recoverability_rank_descending_RH": {
+        "DINOv2-base": 2.0,
+        "CLIP-L": 7.0,
+        "FEMI": 10.0,
+        "DINOv2-large": 6.0,
+        "DINOv2-giant": 4.0,
+        "DINOv3-ViTB": 1.0,
+        "DINOv3-strengthened": 3.0,
+        "V-JEPA2": 8.0,
+        "SigLIP2": 5.0,
+        "RAD-DINO": 9.0
+      },
+      "spearman_mean_CKA_vs_RH": 0.7575757575757575,
+      "spearman_pairwise_CKA_vs_abs_RH_gap": -0.6959156785243741,
+      "note": "Descriptive only: n=10 encoders and the AMH recoverability range is near null, so CKA/rank correlations are not inferential."
+    },
+    "summary": "Pairwise linear CKA computed on centered cached embeddings for 10 Wang encoders; recoverability tracking is descriptive only."
+  },
+  "verdict": "embryo-AMH R/H range -0.0201 to -0.0061; 10/10 encoders have R/H <= 0 or a 95% cluster-bootstrap CI crossing 0; FUID phenotype positive-control R/H range 0.2974 to 0.3401; CKA/recoverability correlations are descriptive only."
+}

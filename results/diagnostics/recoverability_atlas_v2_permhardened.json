@@ -1,0 +1,195 @@
+{
+  "spec": "Recoverability atlas v2 permutation hardening for three manuscript nodes",
+  "source_script": "scripts/recoverability_atlas_v2.py",
+  "settings": {
+    "n_shuffles": 2000,
+    "seed": 20260530,
+    "n_splits": 5,
+    "pca_components": 32,
+    "permutation_jobs": 4,
+    "empirical_p_formula": "(1 + count(null_bits >= observed_bits)) / (n_shuffles + 1)",
+    "ovary_node_encoder": "usfmae"
+  },
+  "nodes": [
+    {
+      "key": "embryo_image_to_wang_amh_tertile",
+      "modality": "Embryo image",
+      "encoder": "DINOv2 ViT-B/14 CLS cached",
+      "target_kind": "AMH-tertile",
+      "target": "Wang AMH tertile",
+      "H_target_bits": 1.584962,
+      "R_fixed_linear": {
+        "bits": 0.00666,
+        "fraction_of_entropy": 0.004202,
+        "baseline_log_loss_nats": 1.098614,
+        "model_log_loss_nats": 1.093998
+      },
+      "permutation_null_n2000": {
+        "fixed_linear": {
+          "n_shuffles": 2000,
+          "tested_statistic": "R_fixed_linear.bits",
+          "alternative": "greater",
+          "bits_mean": -0.000511,
+          "bits_sd": 0.001008,
+          "bits_p95_raw": 0.00079,
+          "bits_p95_floor": 0.00079,
+          "fraction_mean": -0.000322,
+          "fraction_sd": 0.000636,
+          "fraction_p95_floor": 0.000499,
+          "empirical_p_value": 0.0005
+        }
+      },
+      "n": 2542,
+      "n_groups": 1415,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 848,
+        "1": 847,
+        "2": 847
+      },
+      "probe": {
+        "fixed_linear": "StandardScaler + PCA if needed + multinomial LogisticRegression(newton-cholesky)",
+        "fixed_linear_splitter": "StratifiedGroupKFold",
+        "fixed_linear_split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "metric": "held-out predictive V-information: log-loss reduction vs train-fold target prior"
+      },
+      "metadata": {
+        "amh_tertile_edges_raw": [
+          1.91,
+          3.59
+        ],
+        "matched_target_control": "embryo-image to AMH-tertile"
+      },
+      "verdict": {
+        "statistical_null_survives_p_gt_0_05": false,
+        "practical_null_fraction_lt_0_01": true
+      }
+    },
+    {
+      "key": "endocrine_trajectory_to_brigham_amh_tertile",
+      "modality": "Endocrine trajectory",
+      "encoder": "Brigham E2_D02..D25 features",
+      "target_kind": "AMH-tertile",
+      "target": "Brigham AMH tertile",
+      "H_target_bits": 1.584963,
+      "R_fixed_linear": {
+        "bits": 0.158853,
+        "fraction_of_entropy": 0.100225,
+        "baseline_log_loss_nats": 1.098612,
+        "model_log_loss_nats": 0.988503
+      },
+      "permutation_null_n2000": {
+        "fixed_linear": {
+          "n_shuffles": 2000,
+          "tested_statistic": "R_fixed_linear.bits",
+          "alternative": "greater",
+          "bits_mean": -0.000417,
+          "bits_sd": 0.000924,
+          "bits_p95_raw": 0.000813,
+          "bits_p95_floor": 0.000813,
+          "fraction_mean": -0.000263,
+          "fraction_sd": 0.000583,
+          "fraction_p95_floor": 0.000513,
+          "empirical_p_value": 0.0005
+        }
+      },
+      "n": 2448,
+      "n_groups": 1901,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 816,
+        "1": 816,
+        "2": 816
+      },
+      "probe": {
+        "fixed_linear": "StandardScaler + PCA if needed + multinomial LogisticRegression(newton-cholesky)",
+        "fixed_linear_splitter": "StratifiedGroupKFold",
+        "fixed_linear_split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "metric": "held-out predictive V-information: log-loss reduction vs train-fold target prior"
+      },
+      "metadata": {
+        "amh_tertile_edges_raw": [
+          1.1,
+          3.133333
+        ],
+        "min_observed_e2_days": 5,
+        "feature_count": 53,
+        "matched_target_control": "endocrine trajectory to AMH-tertile"
+      },
+      "verdict": {
+        "statistical_null_survives_p_gt_0_05": false,
+        "practical_null_fraction_lt_0_01": false
+      }
+    },
+    {
+      "key": "ovary_us_fuid_reserve_phenotype_usfmae",
+      "modality": "Ovary-US",
+      "encoder": "USF-MAE ViT-B/16 CLS",
+      "target_kind": "ovary-reserve-phenotype",
+      "target": "fuid reserve phenotype (Normal/Dominant/PCO)",
+      "H_target_bits": 1.43078,
+      "R_fixed_linear": {
+        "bits": 0.630987,
+        "fraction_of_entropy": 0.441009,
+        "baseline_log_loss_nats": 0.991884,
+        "model_log_loss_nats": 0.554517
+      },
+      "permutation_null_n2000": {
+        "fixed_linear": {
+          "n_shuffles": 2000,
+          "tested_statistic": "R_fixed_linear.bits",
+          "alternative": "greater",
+          "bits_mean": -0.003196,
+          "bits_sd": 0.006725,
+          "bits_p95_raw": 0.005033,
+          "bits_p95_floor": 0.005033,
+          "fraction_mean": -0.002234,
+          "fraction_sd": 0.0047,
+          "fraction_p95_floor": 0.003518,
+          "empirical_p_value": 0.0005
+        }
+      },
+      "n": 301,
+      "n_groups": 301,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 41,
+        "1": 144,
+        "2": 116
+      },
+      "probe": {
+        "fixed_linear": "StandardScaler + PCA if needed + multinomial LogisticRegression(newton-cholesky)",
+        "fixed_linear_splitter": "StratifiedGroupKFold",
+        "fixed_linear_split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "metric": "held-out predictive V-information: log-loss reduction vs train-fold target prior"
+      },
+      "metadata": {
+        "class_names": {
+          "0": "Normal",
+          "1": "Dominant_Follicle",
+          "2": "PCO"
+        },
+        "matched_target_note": "ovary-US cohort has phenotype labels only; no paired AMH or AFC is exposed locally"
+      },
+      "verdict": {
+        "statistical_null_survives_p_gt_0_05": false,
+        "practical_null_fraction_lt_0_01": false
+      }
+    }
+  ],
+  "embryo_amh_null_check": {
+    "key": "embryo_image_to_wang_amh_tertile",
+    "R_fixed_linear": {
+      "bits": 0.00666,
+      "fraction_of_entropy": 0.004202,
+      "baseline_log_loss_nats": 1.098614,
+      "model_log_loss_nats": 1.093998
+    },
+    "hardened_perm_p": 0.0005,
+    "statistical_null_survives_p_gt_0_05": false,
+    "practical_null_fraction_lt_0_01": true,
+    "interpretation_rule": "Statistical null requires p>0.05; practical null is separately flagged when R/H<0.01."
+  },
+  "runtime_seconds": 559.0203292369843,
+  "ts": "2026-05-30T06:28:28Z"
+}

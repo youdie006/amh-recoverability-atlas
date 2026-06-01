@@ -1,75 +1,53 @@
-# Modality-dependent AMH Recoverability and Model-class Sufficiency across IVF Endocrine and Image Representations
+# A Target-Separated Recoverability Audit for Frozen Foundation-Model Embeddings, Demonstrated on AMH in IVF
 
-Code release for a study that maps, across public IVF data, **(i) where AMH / ovarian-reserve information is
-recoverable** in learned representations and **(ii) the simplest model class that suffices to recover it** —
-across maternal endocrine trajectories, ovarian ultrasound, and embryo morphology.
+This repository audits where AMH and ovarian-reserve information is recoverable from frozen foundation-model embeddings across public IVF-related data, including DINOv2, DINOv3, CLIP, USF-MAE, and related encoders. The analyses use predictive V-information probing, conditional age probing, control tasks, MDL summaries, and model-class sufficiency checks with TOST. The contribution is the target-separated audit protocol and the reusable `reserve_audit` package, not a new model.
 
-We do **not** claim generative models are universally superior. We ask **when distributional generative
-modeling is load-bearing and when simpler affine or discriminative models are sufficient**, defining a model
-class as *sufficient* when a simpler class matches or exceeds a more complex one (within uncertainty) on
-distributional fidelity, AMH-conditioned effect recovery, and downstream phenotype recovery. One shared
-protocol (affine / discriminative / generative, with permutation nulls and acquisition-metadata controls) is
-applied to every modality.
+## Key Findings
 
-## Key findings — recoverability is modality-dependent
+1. Two single-cohort age-conditioning results separate reserve-relevant and reserve-adjacent settings. In Brigham/Leahy endocrine trajectories, AMH-tertile recoverability changed from marginal `R/H=0.100225` to age-conditioned `R/H=0.087189`; the 2000-shuffle conditional permutation result was `p=0.0004997501249375312`. In Wang embryo morphology, AMH-tertile recoverability changed from marginal `R/H=0.004202` to age-conditioned `R/H=-0.000044`, with `p=0.597015`.
 
-| Modality (cohort) | AMH-linked signal? | Simplest sufficient model | Neural generative load-bearing? |
-|---|---|---|---|
-| Endocrine trajectory (Brigham) | yes, direct (measured AMH) | **conditional-mean (+ Gaussian residual)**; masked FM is a convenient model under heavy missingness but **not load-bearing** (AMH-conditioned mean contrast d ≈ 1.35, patient-level permutation p = 0.032 at K=30 with the observed statistic ≈ 3× the largest null; a conditional-mean + Gaussian-residual baseline matches/beats FM on held-out CRPS/NLL) | **NO** |
-| Ovarian ultrasound (fuid / PCOSGen) | yes, AMH-linked reserve/PCOM phenotype (within-cohort AUROC ≈ 0.85; acquisition-conditioned, does not transfer) | **affine** (closed-form Gaussian-OT ≥ FM / OT-CFM / DDBM on held-out fidelity) | **NO** |
-| Embryo morphology (Wang / Kromp) | no recoverable signal (7 encoders, distribution-free n.s.); grade encoded 0.83–0.96; clinical check AMH→oocyte yield ρ≈0.46 vs →grade ρ≈0.02 | n/a (signal absent) | **NO** |
+2. The same frozen-encoder pipeline recovers an ovary-US phenotype positive control: DINOv2 `R/H=0.3401` and USF-MAE `R/H=0.2974` on FUID. This makes the embryo result a measured boundary rather than a failed pipeline check.
 
-The contribution is this map and its lesson: **AMH recoverability and the required model complexity are
-modality-dependent; model complexity should be justified by data geometry and observation structure, not by
-generative branding.** Once matched baselines are used, **no neural generative model is strictly load-bearing on
-any modality**: ovarian ultrasound is affine-sufficient (closed-form Gaussian-OT ≥ FM / OT-CFM / DDBM on
-held-out fidelity); endocrine trajectories are conditional-mean-sufficient (masked FM is a convenient model
-under heavy missingness, but a conditional-mean + Gaussian-residual baseline matches/beats it on held-out
-CRPS/NLL); and embryo morphology carries no recoverable AMH signal. Earlier "generative-beats-discriminative",
-generative-OOD, and "FM is load-bearing on trajectories" claims were **retracted** after controls showed a
-non-linear discriminative probe recovers the same residual signal, the apparent OOD win was cross-dataset
-acquisition detection, and a conditional-mean + Gaussian baseline matches FM on held-out trajectory calibration
-(see `results/*` notes). The AMH-conditioned trajectory mean contrast is reported as a *model-implied
-conditional contrast*, not a causal counterfactual. Analyses are representation-level and within-cohort
-(distinct public cohorts; no patient-matched or causal claim).
+3. Clinical concordance points in the same direction. A 6-cohort AMH meta-analysis found a quantity-marker association of `r=0.4054` with 95% HKSJ CI `0.2833` to `0.5145` and `p=0.0005032429233777444`; the quality-marker pool was near zero at `r=0.0156` with 95% HKSJ CI `-0.0262` to `0.0575` and `p=0.35808119845986486`. Quantity effects were positive in 6/6 cohorts, while quality effects were near zero in 5/5 estimable cohorts.
 
-## Repository layout
+These are modest aggregate effects. The age-conditioning results are single-cohort and adjust for age only. They should be read as a representation-analysis audit, not as an image-to-serum-AMH predictor.
 
-- `experiments/` — image / feature-space transport experiments (ovarian US + embryo), distribution-free
-  tests, representational geometry, and figure generation.
-- `endocrine/` — AMH-conditioned flow matching on endocrine trajectories.
-- `results/` — aggregate result summaries (JSON) that back the tables/figures (no data, no PHI).
-- `figures/` — generated figures.
+## Repository Layout
+
+```text
+reserve_audit/              reusable audit package
+scripts/                    benchmark, hardening, verification, and figure generators
+results/diagnostics/        aggregate diagnostic JSON files used for the public claims
+figures/                    public figure generated from aggregate diagnostics
+requirements.txt            minimal Python dependencies
+```
 
 ## Reproducing
 
+Install the minimal dependencies:
+
 ```bash
 pip install -r requirements.txt
-export PROJECT_ROOT=/path/to/working/dir   # holds data/external/... and results/diagnostics/
-python experiments/ovary_otcfm.py
-python experiments/ovary_residualize_localization_null.py
-python experiments/pcosgen_dissociation.py
-# ... etc; see each script's docstring
 ```
 
-Each script reads `PROJECT_ROOT` (default: current directory) and expects the relevant public dataset
-under `PROJECT_ROOT/data/external/`. Frozen encoders are downloaded from Hugging Face on first run.
+The diagnostics JSON files in `results/diagnostics/` back the numeric claims above. The public figure can be regenerated from the aggregate benchmark JSON:
 
-## Data (public)
+```bash
+python scripts/make_fig_encoder_benchmark.py
+```
 
-- Endocrine: Brigham/Leahy 2021 IVF cycle data (measured AMH + hormone trajectories).
-- Ovarian ultrasound: fuid (Borna et al., Front. Physiol. 2025); PCOSGen (Zenodo, AUTO-PCOS).
-- Embryo: Wang 2026 (Mendeley Data); Kromp 2023 (Scientific Data).
+The benchmark-value check can be run with:
 
-No raw data is redistributed here; please obtain datasets from their original sources.
+```bash
+python scripts/verify_benchmark.py
+```
 
-## Methods referenced
+Raw cohort data and cached embeddings are not redistributed here because users should obtain those assets from their original sources and licenses. This release contains the protocol code, aggregate diagnostics, figure, and generators.
 
-Flow Matching (Lipman et al., ICLR 2023, arXiv:2210.02747); OT-CFM (Tong et al., TMLR 2024,
-arXiv:2302.00482); DDBM (Zhou et al., ICLR 2024, arXiv:2309.16948); DINOv2 (Oquab et al., TMLR 2024,
-arXiv:2304.07193); Classifier Two-Sample Test (Lopez-Paz & Oquab, ICLR 2017); MMD / HSIC (Gretton et
-al.); Kraskov mutual information (2004).
+## Data
 
-## License
+Public cohorts used by the audit include Brigham/Leahy 2021, Mendeley 5k IVF, Wang embryo-image data, FUID ovary-US, Clomiphene DOR, PGT-A euploidy DOR, Embryoscope hr-NGS KIDScore, and Heavy-metal DOR. Users should obtain each cohort from its original source.
 
-MIT (see `LICENSE`).
+## Scope
+
+This is representation-analysis and probing methodology demonstrated on AMH and IVF; image-to-serum-AMH is future work gated on paired ovary-US plus continuous-AMH data.

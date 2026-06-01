@@ -1,0 +1,71 @@
+{
+  "node": "endocrine_trajectory_to_brigham_amh_tertile",
+  "status": "ok",
+  "method_reference_script": "scripts/atlas_conditional_probing.py",
+  "settings": {
+    "requested_n_shuffles": 2000,
+    "n_shuffles_actual": 2000,
+    "n_splits": 5,
+    "seed": 20260530,
+    "node_seed": 20260570,
+    "permutation_seed": 20260870,
+    "pca_components": 32,
+    "permutation_jobs": 12,
+    "empirical_p_formula": "(1 + count(null_bits >= observed_bits)) / (n_shuffles + 1)",
+    "conditional_permutation": "cluster-aware target-label permutation; both age-only and age+modality probes refit for each shuffle"
+  },
+  "n": 2448,
+  "n_groups": 1901,
+  "H_target_bits": 1.584962500721156,
+  "V_conditional_beyond_age": {
+    "bits": 0.13819103584536424,
+    "fraction_of_entropy_R_over_H": 0.0871888361917001,
+    "baseline_log_loss_nats": 1.0428163185810155,
+    "model_log_loss_nats": 0.947029591706143,
+    "baseline_name": "age_only",
+    "augmented_name": "age_plus_modality"
+  },
+  "conditional_permutation_null": {
+    "tested_statistic": "V_conditional_beyond_age.bits",
+    "alternative": "greater",
+    "n_shuffles_actual": 2000,
+    "count_null_ge_observed": 0,
+    "empirical_p_value": 0.0004997501249375312,
+    "bits_mean": -0.0005222917334671664,
+    "bits_sd": 0.0017101775044959264,
+    "bits_p95": 0.00196960074626766,
+    "bits_p99": 0.00305654581536724,
+    "fraction_mean": -0.0003295293946888486,
+    "fraction_sd": 0.0010790018714750649,
+    "fraction_p95": 0.0012426797134768134,
+    "fraction_p99": 0.0019284656980695222
+  },
+  "cached_inputs": {
+    "loadable": true,
+    "feature_shape": [
+      2448,
+      53
+    ],
+    "baseline_feature_shape": [
+      2448,
+      1
+    ],
+    "baseline_feature_names": [
+      "Patient_Age"
+    ],
+    "metadata": {
+      "amh_tertile_edges_raw": [
+        1.1,
+        3.133333
+      ],
+      "age_column": "Patient_Age",
+      "min_observed_e2_days": 5,
+      "feature_count": 53,
+      "finite_age_rows": 2448,
+      "n_dropped_nonfinite_age_or_amh": 0,
+      "permutation_unit": "Patient_Code"
+    }
+  },
+  "runtime_seconds": 150.27809858322144,
+  "ts": "2026-05-31T01:57:44Z"
+}

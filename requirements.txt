@@ -1,8 +1,5 @@
-torch
-transformers
-scikit-learn
-scipy
 numpy
 pandas
-Pillow
+scipy
+scikit-learn
 matplotlib

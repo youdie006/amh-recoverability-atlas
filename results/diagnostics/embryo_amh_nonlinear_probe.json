@@ -1,0 +1,657 @@
+{
+  "analysis": "embryo_amh_nonlinear_probe",
+  "created_utc": "2026-05-31T18:51:05Z",
+  "settings": {
+    "seed": 20260601,
+    "n_splits": 5,
+    "n_bootstrap": 1000,
+    "target": "registered_amh_tertile",
+    "pca_components": [
+      32,
+      64
+    ],
+    "probe_conventions": "same patient groups, train-fold class-prior baseline, R/H in fraction-of-entropy, patient-cluster bootstrap CI",
+    "nonlinear_model": "HistGradientBoostingClassifier with sklearn defaults except fixed random_state",
+    "nonlinear_model_signature": "(loss='log_loss', *, learning_rate=0.1, max_iter=100, max_leaf_nodes=31, max_depth=None, min_samples_leaf=20, l2_regularization=0.0, max_features=1.0, max_bins=255, categorical_features='from_dtype', monotonic_cst=None, interaction_cst=None, warm_start=False, early_stopping='auto', scoring='loss', validation_fraction=0.1, n_iter_no_change=10, tol=1e-07, verbose=0, random_state=None, class_weight=None)",
+    "feature_extraction": "none; cached np.load arrays only",
+    "random_control": "single fixed row-level random permutation preserving AMH tertile class counts; same folds as real target"
+  },
+  "column_audit": {
+    "index_path": "data/external/mendeley_wang_2026/embeddings/index_wang.csv",
+    "amh_recovered_path": "data/external/mendeley_wang_2026/amh_recovered_wang.csv",
+    "index_shape": [
+      2542,
+      9
+    ],
+    "amh_recovered_shape": [
+      2542,
+      6
+    ],
+    "index_columns": [
+      "Image",
+      "patient_id",
+      "embryo_idx",
+      "outcome",
+      "AMH_bucket",
+      "amh",
+      "age",
+      "split",
+      "prefix"
+    ],
+    "amh_recovered_columns": [
+      "Image",
+      "AMH_hypA",
+      "AMH_raw",
+      "AMH_bucket",
+      "AMH_hypB",
+      "is_palindrome"
+    ],
+    "same_image_order": true,
+    "same_amh_values": true,
+    "age_column_in_index": "age",
+    "age_column_in_amh_recovered": null,
+    "age_column_used": "age"
+  },
+  "target": {
+    "display_name": "REGISTERED serum AMH tertile",
+    "kind": "continuous_tertile",
+    "label_source_column": "amh",
+    "n": 2542,
+    "n_groups": 1415,
+    "classes": [
+      0,
+      1,
+      2
+    ],
+    "class_counts": {
+      "0": 856,
+      "1": 841,
+      "2": 845
+    },
+    "target_entropy_bits": 1.5849221395516837,
+    "tertile_edges": [
+      1.91,
+      3.59
+    ],
+    "category_mapping": null,
+    "generation": null
+  },
+  "omitted_targets_seen_but_not_used": {
+    "clinic_site_batch": {
+      "status": "omitted",
+      "reason": "no clinic/site/batch column found",
+      "searched_tokens": [
+        "clinic",
+        "site",
+        "batch",
+        "center",
+        "centre",
+        "lab",
+        "laboratory"
+      ]
+    }
+  },
+  "linear_source": {
+    "status": "loaded",
+    "path": "results/diagnostics/unified_encoder_benchmark.json",
+    "benchmark": "unified_frozen_encoder_recoverability",
+    "created_utc": "2026-05-31T17:42:29Z"
+  },
+  "encoders": {
+    "DINOv2-base": {
+      "path": "data/external/mendeley_wang_2026/embeddings/dinov2_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/dinov2_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 768,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "linear_logistic_pca32_from_unified_encoder_benchmark": {
+        "R/H": -0.0061244632722522035,
+        "bootstrap_CI": [
+          -0.015639579389243836,
+          0.0028161972326175046
+        ],
+        "R_bits": -0.009706797433063668,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1053133336505987,
+        "mdl_codelength_ratio": 1.0061244589130407,
+        "null_like": true
+      },
+      "nonlinear_hist_gradient_boosting": {
+        "pca32": {
+          "R/H": -0.22515782829058495,
+          "bootstrap_CI": [
+            -0.25482996115709544,
+            -0.1932616367717321
+          ],
+          "R_bits": -0.3568576269511245,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.3459399523600888,
+          "mdl_codelength_ratio": 1.2251576680299143,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.21087212849113582,
+            "bootstrap_CI": [
+              -0.23911346556558377,
+              -0.18441949884281086
+            ],
+            "R_bits": -0.33421590505998855,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.3313635418230718,
+            "mdl_codelength_ratio": 1.21065766781275,
+            "null_like": true
+          },
+          "control_RH": -0.21087212849113582,
+          "control_task_selectivity": -0.01428569979944913,
+          "null_like": true
+        },
+        "pca64": {
+          "R/H": -0.2190342802204945,
+          "bootstrap_CI": [
+            -0.2491176581404886,
+            -0.19070425065007054
+          ],
+          "R_bits": -0.3471522800422292,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.3392127185138318,
+          "mdl_codelength_ratio": 1.219034124318384,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(64) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 64,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.21503412580889567,
+            "bootstrap_CI": [
+              -0.2424643198297943,
+              -0.18895462236492272
+            ],
+            "R_bits": -0.34081234675366084,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.3359358467847688,
+            "mdl_codelength_ratio": 1.2148154323057425,
+            "null_like": true
+          },
+          "control_RH": -0.21503412580889567,
+          "control_task_selectivity": -0.004000154411598844,
+          "null_like": true
+        }
+      },
+      "status": "used",
+      "reason": null
+    },
+    "CLIP-L": {
+      "path": "data/external/mendeley_wang_2026/embeddings/clipl_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/clipl_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "linear_logistic_pca32_from_unified_encoder_benchmark": {
+        "R/H": -0.012009627807830036,
+        "bootstrap_CI": [
+          -0.020543461049230636,
+          -0.003719514583404205
+        ],
+        "R_bits": -0.01903432500040538,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1117786830854968,
+        "mdl_codelength_ratio": 1.0120096192597328,
+        "null_like": true
+      },
+      "nonlinear_hist_gradient_boosting": {
+        "pca32": {
+          "R/H": -0.21973406868306664,
+          "bootstrap_CI": [
+            -0.2511399114571237,
+            -0.19199732090769975
+          ],
+          "R_bits": -0.3482613902695626,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.3399814951408382,
+          "mdl_codelength_ratio": 1.2197339122828674,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.23287622132320596,
+            "bootstrap_CI": [
+              -0.2595901124255514,
+              -0.2035775919955431
+            ],
+            "R_bits": -0.369090678950287,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.3555368930177978,
+            "mdl_codelength_ratio": 1.2326393820938482,
+            "null_like": true
+          },
+          "control_RH": -0.23287622132320596,
+          "control_task_selectivity": 0.01314215264013932,
+          "null_like": true
+        },
+        "pca64": {
+          "R/H": -0.24118465535151207,
+          "bootstrap_CI": [
+            -0.2727142198617038,
+            -0.20946402394866967
+          ],
+          "R_bits": -0.38225889998675394,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.3635467731473687,
+          "mdl_codelength_ratio": 1.241184483683421,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(64) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 64,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.24150395365017846,
+            "bootstrap_CI": [
+              -0.270323060780629,
+              -0.2124701845909227
+            ],
+            "R_bits": -0.3827649629294315,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.3650151844041178,
+            "mdl_codelength_ratio": 1.2412583398646901,
+            "null_like": true
+          },
+          "control_RH": -0.24150395365017846,
+          "control_task_selectivity": 0.0003192982986663928,
+          "null_like": true
+        }
+      },
+      "status": "used",
+      "reason": null
+    },
+    "FEMI": {
+      "path": "data/external/mendeley_wang_2026/embeddings/femi_z_wang.npy",
+      "load_audit": {
+        "path": "data/external/mendeley_wang_2026/embeddings/femi_z_wang.npy",
+        "path_note": null,
+        "np_load_verified": true,
+        "status": "used",
+        "reason": null,
+        "n": 2542,
+        "dim": 1024,
+        "format": "npy",
+        "array_key": null,
+        "ids_key": null,
+        "alignment": {
+          "method": "assumed_label_index_order",
+          "reordered": false,
+          "ids_checked": false
+        }
+      },
+      "linear_logistic_pca32_from_unified_encoder_benchmark": {
+        "R/H": -0.020126912309934988,
+        "bootstrap_CI": [
+          -0.029174892806071093,
+          -0.011223003125668842
+        ],
+        "R_bits": -0.03189958892083128,
+        "target_entropy_bits": 1.5849221395516837,
+        "baseline_log_loss_nats": 1.098585094377604,
+        "model_log_loss_nats": 1.1206962044990996,
+        "mdl_codelength_ratio": 1.020126897984195,
+        "null_like": true
+      },
+      "nonlinear_hist_gradient_boosting": {
+        "pca32": {
+          "R/H": -0.24364929739314503,
+          "bootstrap_CI": [
+            -0.2770671710894005,
+            -0.21260949583640087
+          ],
+          "R_bits": -0.3861651657246079,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.36625439023008,
+          "mdl_codelength_ratio": 1.2436491239707947,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(32) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 32,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 32
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 32
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.21754607192275668,
+            "bootstrap_CI": [
+              -0.24377271542267256,
+              -0.19111039789048476
+            ],
+            "R_bits": -0.34479358576288,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.3386954313791444,
+            "mdl_codelength_ratio": 1.2173248237260483,
+            "null_like": true
+          },
+          "control_RH": -0.21754607192275668,
+          "control_task_selectivity": -0.026103225470388347,
+          "null_like": true
+        },
+        "pca64": {
+          "R/H": -0.2401220220626061,
+          "bootstrap_CI": [
+            -0.27140498377896305,
+            -0.20808724333569167
+          ],
+          "R_bits": -0.38057470896094225,
+          "target_entropy_bits": 1.5849221395516837,
+          "baseline_log_loss_nats": 1.098585094377604,
+          "model_log_loss_nats": 1.362379380886303,
+          "mdl_codelength_ratio": 1.2401218511508658,
+          "probe": {
+            "splitter": "StratifiedGroupKFold",
+            "n_splits": 5,
+            "model": "StandardScaler + PCA(64) + HistGradientBoostingClassifier(defaults, fixed random_state)",
+            "pca_components_requested": 64,
+            "baseline": "train-fold class prior with Jeffreys smoothing"
+          },
+          "folds": [
+            {
+              "fold": 1,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 2,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 3,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 4,
+              "n_train": 2034,
+              "n_test": 508,
+              "n_train_classes": 3,
+              "pca_components": 64
+            },
+            {
+              "fold": 5,
+              "n_train": 2033,
+              "n_test": 509,
+              "n_train_classes": 3,
+              "pca_components": 64
+            }
+          ],
+          "control_task": {
+            "label_permutation": "single fixed row-level random permutation preserving AMH tertile class counts",
+            "R/H": -0.21573734079662496,
+            "bootstrap_CI": [
+              -0.24309569173365841,
+              -0.18744500519293178
+            ],
+            "R_bits": -0.3419268877565776,
+            "target_entropy_bits": 1.5849221395516837,
+            "baseline_log_loss_nats": 1.0997027295324504,
+            "model_log_loss_nats": 1.336708387738559,
+            "mdl_codelength_ratio": 1.2155179321114116,
+            "null_like": true
+          },
+          "control_RH": -0.21573734079662496,
+          "control_task_selectivity": -0.024384681265981145,
+          "null_like": true
+        }
+      },
+      "status": "used",
+      "reason": null
+    }
+  },
+  "verdict": {
+    "null_survives_nonlinear_probe": true,
+    "n_nonlinear_arms": 6,
+    "n_positive_nonnull_arms": 0,
+    "statement": "All 6 non-linear AMH probe arms are null-like by R/H<=0 or CI crossing 0; the embryo->AMH null survives this fixed non-linear probe check."
+  }
+}

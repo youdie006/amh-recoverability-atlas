@@ -1,0 +1,301 @@
+{
+  "spec": "AMH-IVF recoverability atlas conditional probing",
+  "method_reference": {
+    "paper": "Hewitt et al. 2021, Conditional probing: measuring usable information beyond a baseline, arXiv:2109.09234",
+    "operational_statistic": "V_cond = (held-out log-loss(age-only baseline) - held-out log-loss(age+modality probe)) / H(target)"
+  },
+  "settings": {
+    "n_shuffles": 200,
+    "n_splits": 5,
+    "seed": 20260530,
+    "pca_components": 32,
+    "permutation_jobs": 1,
+    "empirical_p_formula": "(1 + count(null_bits >= observed_bits)) / (n_shuffles + 1)",
+    "conditional_permutation": "cluster-aware target-label permutation; both age-only and age+modality probes are refit for each shuffle"
+  },
+  "marginal_source": {
+    "path": "results/diagnostics/recoverability_atlas_v2_permhardened.json",
+    "statistic": "R_fixed_linear from recoverability_atlas_v2_permhardened.json"
+  },
+  "embryo_cluster_permutation_reconciliation": {
+    "available": true,
+    "path": "results/diagnostics/embryo_perm_reconciliation.json",
+    "correct_null": "patient_cluster_label",
+    "reason_iid_is_wrong": "Wang contributes multiple embryo images per patient; image-level shuffling breaks the patient-level AMH label block and gives the wrong exchangeability unit.",
+    "cluster_structure": {
+      "n_patients": 1415,
+      "n_images": 2542,
+      "min": 1,
+      "p25": 2.0,
+      "median": 2.0,
+      "p75": 2.0,
+      "max": 3,
+      "mean": 1.7964664310954064,
+      "images_per_patient_counts": {
+        "1": 345,
+        "2": 1013,
+        "3": 57
+      }
+    }
+  },
+  "nodes": [
+    {
+      "key": "ovary_us_fuid_reserve_phenotype_usfmae",
+      "modality": "Ovary-US",
+      "encoder": "USF-MAE ViT-B/16 CLS",
+      "target_kind": "ovary-reserve-phenotype",
+      "target": "fuid reserve phenotype (Normal/Dominant/PCO)",
+      "H_target_bits": 1.43078,
+      "n": 301,
+      "n_groups": 301,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 41,
+        "1": 144,
+        "2": 116
+      },
+      "V_marginal": {
+        "bits": 0.630987,
+        "fraction_of_entropy": 0.441009,
+        "baseline_log_loss_nats": 0.991884,
+        "model_log_loss_nats": 0.554517
+      },
+      "V_conditional_beyond_age": null,
+      "shrinkage_age_explained": {
+        "bits": null,
+        "fraction_of_entropy": null,
+        "fraction_of_marginal": null
+      },
+      "conditional_permutation_null": null,
+      "marginal_permutation_p": 0.0005,
+      "baseline": {
+        "available": false,
+        "requested_action": "report marginal only",
+        "reason": "The local fuid ovary-US release exposes image phenotype folders only; no age, patient demographics, AMH, or AFC sidecar is available.",
+        "evidence": [
+          "data/external/ovarian_us/fuid/README.md describes only Normal, Dominant Follicle, and PCO categories.",
+          "data/external/ovarian_us/fuid/extracted contains class-folder images, not a demographic table."
+        ]
+      },
+      "interpretation": "No conditional age/demographic probe is identifiable for fuid; this node remains a marginal phenotype recoverability result."
+    },
+    {
+      "key": "endocrine_trajectory_to_brigham_amh_tertile",
+      "modality": "Endocrine trajectory",
+      "encoder": "Brigham E2_D02..D25 features",
+      "target_kind": "AMH-tertile",
+      "target": "Brigham AMH tertile",
+      "H_target_bits": 1.584963,
+      "n": 2448,
+      "n_groups": 1901,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 816,
+        "1": 816,
+        "2": 816
+      },
+      "baseline": {
+        "available": true,
+        "feature_names": [
+          "Patient_Age"
+        ],
+        "baseline_name": "age_only",
+        "augmented_name": "age_plus_modality"
+      },
+      "V_marginal": {
+        "bits": 0.158853,
+        "fraction_of_entropy": 0.100225,
+        "baseline_log_loss_nats": 1.098612,
+        "model_log_loss_nats": 0.988503
+      },
+      "V_conditional_beyond_age": {
+        "bits": 0.138191,
+        "fraction_of_entropy": 0.087189,
+        "baseline_log_loss_nats": 1.042816,
+        "model_log_loss_nats": 0.94703,
+        "baseline_name": "age_only",
+        "augmented_name": "age_plus_modality"
+      },
+      "shrinkage_age_explained": {
+        "bits": 0.020662,
+        "fraction_of_entropy": 0.013036,
+        "fraction_of_marginal": 0.13007
+      },
+      "conditional_permutation_null": {
+        "n_shuffles": 200.0,
+        "tested_statistic": "V_conditional_beyond_age.bits",
+        "alternative": "greater",
+        "bits_mean": -0.000494,
+        "bits_sd": 0.001622,
+        "bits_p95_raw": 0.001916,
+        "bits_p95_floor": 0.001916,
+        "fraction_mean": -0.000312,
+        "fraction_sd": 0.001023,
+        "fraction_p95_floor": 0.001209,
+        "empirical_p_value": 0.004975
+      },
+      "marginal_permutation_p": 0.0005,
+      "probe": {
+        "conditional_fixed_linear": "LogisticRegression age-only vs age+modality, out-of-fold",
+        "splitter": "StratifiedGroupKFold",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "feature_transform": "baseline covariates are scaled separately and always retained; modality block is scaled/PCA-compressed before concatenation",
+        "metric": "held-out conditional predictive V-information: log-loss reduction of age+modality vs age-only"
+      },
+      "metadata": {
+        "amh_tertile_edges_raw": [
+          1.1,
+          3.133333
+        ],
+        "age_column": "Patient_Age",
+        "min_observed_e2_days": 5,
+        "feature_count": 53,
+        "finite_age_rows": 2448,
+        "n_dropped_nonfinite_age_or_amh": 0,
+        "permutation_unit": "Patient_Code"
+      },
+      "interpretation": "Most of the reserve recoverability survives age conditioning."
+    },
+    {
+      "key": "embryo_image_to_wang_amh_tertile",
+      "modality": "Embryo image",
+      "encoder": "DINOv2 ViT-B/14 CLS cached",
+      "target_kind": "AMH-tertile",
+      "target": "Wang AMH tertile",
+      "H_target_bits": 1.584962,
+      "n": 2542,
+      "n_groups": 1415,
+      "n_classes": 3,
+      "class_counts": {
+        "0": 848,
+        "1": 847,
+        "2": 847
+      },
+      "baseline": {
+        "available": true,
+        "feature_names": [
+          "age"
+        ],
+        "baseline_name": "age_only",
+        "augmented_name": "age_plus_modality"
+      },
+      "V_marginal": {
+        "bits": 0.00666,
+        "fraction_of_entropy": 0.004202,
+        "baseline_log_loss_nats": 1.098614,
+        "model_log_loss_nats": 1.093998
+      },
+      "V_conditional_beyond_age": {
+        "bits": -0.000069,
+        "fraction_of_entropy": -0.000044,
+        "baseline_log_loss_nats": 1.077982,
+        "model_log_loss_nats": 1.07803,
+        "baseline_name": "age_only",
+        "augmented_name": "age_plus_modality"
+      },
+      "shrinkage_age_explained": {
+        "bits": 0.006729,
+        "fraction_of_entropy": 0.004246,
+        "fraction_of_marginal": 1.010356
+      },
+      "conditional_permutation_null": {
+        "n_shuffles": 200.0,
+        "tested_statistic": "V_conditional_beyond_age.bits",
+        "alternative": "greater",
+        "bits_mean": 0.000133,
+        "bits_sd": 0.001391,
+        "bits_p95_raw": 0.002326,
+        "bits_p95_floor": 0.002326,
+        "fraction_mean": 0.000084,
+        "fraction_sd": 0.000877,
+        "fraction_p95_floor": 0.001467,
+        "empirical_p_value": 0.597015
+      },
+      "marginal_permutation_p": 0.0005,
+      "probe": {
+        "conditional_fixed_linear": "LogisticRegression age-only vs age+modality, out-of-fold",
+        "splitter": "StratifiedGroupKFold",
+        "split_policy": "fixed observed-label split plan reused for all permutation draws",
+        "feature_transform": "baseline covariates are scaled separately and always retained; modality block is scaled/PCA-compressed before concatenation",
+        "metric": "held-out conditional predictive V-information: log-loss reduction of age+modality vs age-only"
+      },
+      "metadata": {
+        "amh_tertile_edges_raw": [
+          1.91,
+          3.59
+        ],
+        "age_column": "age",
+        "finite_age_rows": 2542,
+        "n_dropped_nonfinite_age_or_amh": 0,
+        "permutation_unit": "patient_id"
+      },
+      "interpretation": "Embryo-image AMH-tertile signal is practically gone after age conditioning."
+    }
+  ],
+  "multi_marker_contrast_age_adjustment": {
+    "available": true,
+    "path": "results/diagnostics/multimarker_reserve_protocol.json",
+    "age_adjusted_confirmed": true,
+    "partial_correlation": "Spearman ranks residualized on age; Pearson correlation of residuals",
+    "age_handling": "age is inspected and used as the adjustment variable; age itself is not analyzed as an age-adjusted predictor.",
+    "quantity_signal_confirmation": {
+      "amh": "positive age-adjusted partial Spearman",
+      "afc": "positive age-adjusted partial Spearman",
+      "fsh": "inverse age-adjusted partial Spearman"
+    },
+    "markers": {
+      "amh": {
+        "expected_quantity_direction": "positive",
+        "pooled_quantity_partial_spearman_r": 0.447211,
+        "pooled_quantity_partial_spearman_ci95": [
+          0.3184480259767714,
+          0.5597694694243207
+        ],
+        "pooled_quantity_p_hksj": 0.000445,
+        "pooled_sign_summary": {
+          "quantity_r_sign": "positive",
+          "quality_r_sign": "negative",
+          "expected_quantity_direction_met": true,
+          "quality_abs_r_lt_0_10": true,
+          "raw_gap_sign": "positive"
+        }
+      },
+      "afc": {
+        "expected_quantity_direction": "positive",
+        "pooled_quantity_partial_spearman_r": 0.382138,
+        "pooled_quantity_partial_spearman_ci95": [
+          0.1544243393792741,
+          0.5713013537811092
+        ],
+        "pooled_quantity_p_hksj": 0.019719,
+        "pooled_sign_summary": {
+          "quantity_r_sign": "positive",
+          "quality_r_sign": "negative",
+          "expected_quantity_direction_met": true,
+          "quality_abs_r_lt_0_10": true,
+          "raw_gap_sign": "positive"
+        }
+      },
+      "fsh": {
+        "expected_quantity_direction": "negative",
+        "pooled_quantity_partial_spearman_r": -0.252818,
+        "pooled_quantity_partial_spearman_ci95": [
+          -0.45319207848918175,
+          -0.02812519776714257
+        ],
+        "pooled_quantity_p_hksj": 0.040319,
+        "pooled_sign_summary": {
+          "quantity_r_sign": "negative",
+          "quality_r_sign": "positive",
+          "expected_quantity_direction_met": true,
+          "quality_abs_r_lt_0_10": true,
+          "raw_gap_sign": "negative"
+        }
+      }
+    },
+    "note": "No recomputation performed; multimarker_reserve_protocol.json already stores age-partialed quantity associations, so these are beyond-age associations."
+  },
+  "VERDICT": "PARTIAL SURVIVAL: endocrine reserve recoverability survives age-conditioning, while embryo-image AMH recoverability is practically negligible beyond maternal age; fuid cannot be age-conditioned because demographics are absent.",
+  "runtime_seconds": 735.995163,
+  "ts": "2026-05-30T10:57:10Z"
+}

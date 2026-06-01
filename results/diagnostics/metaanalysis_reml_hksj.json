@@ -1,0 +1,504 @@
+{
+  "spec": "MUST-FIX meta-analysis correction: Paule-Mandel tau2, HKSJ CIs, prediction intervals, paired cluster bootstrap contrast",
+  "source_json": "results/diagnostics/amh_qty_qual_metaanalysis.json",
+  "settings": {
+    "tau2_estimator": "Paule-Mandel (allowed alternative to REML)",
+    "confidence_interval": "Hartung-Knapp-Sidik-Jonkman on Fisher-z scale, transformed back to r",
+    "prediction_interval": "95% random-effects prediction interval on Fisher-z scale, transformed back to r",
+    "contrast": "paired patient/group-within-cohort plus cohort bootstrap, not independent-pools z test",
+    "contrast_bootstrap_replicates": 3000,
+    "seed": 20260530
+  },
+  "pools": {
+    "amh": {
+      "quantity": {
+        "estimator": "Paule-Mandel",
+        "ci_method": "Hartung-Knapp-Sidik-Jonkman",
+        "hksj_variance_floor": "modified HKSJ uses max(1, residual scale) to avoid anti-conservative shrinkage",
+        "prediction_interval_method": "t-based random-effects prediction interval on Fisher-z scale using tau2 plus HKSJ mean variance",
+        "k": 6,
+        "z": 0.4300398961703591,
+        "se_z_conventional_random_effects": 0.053993511097707426,
+        "se_z_hksj": 0.053993511097707426,
+        "z_ci95_hksj": [
+          0.2912451573003646,
+          0.5688346350403536
+        ],
+        "r": 0.40535464996380954,
+        "r_ci95_hksj": [
+          0.28328045232566457,
+          0.5145029144417427
+        ],
+        "z_prediction_interval95": [
+          0.05554511699074954,
+          0.8045346753499687
+        ],
+        "r_prediction_interval95": [
+          0.055488063689808645,
+          0.6665642758292211
+        ],
+        "p_hksj": 0.0005032429233777444,
+        "tau2": 0.015278079176068113,
+        "q_fixed": 98.26521423217346,
+        "q_df": 5,
+        "i2": 94.91172940590515,
+        "hksj_scale_raw": 1.0,
+        "hksj_scale_used": 1.0,
+        "df_hksj": 5,
+        "df_prediction_interval": 4,
+        "effects": [
+          {
+            "label": "Brigham/Leahy 2021",
+            "z": 0.6068780863515295,
+            "se_z": 0.016893460128015556,
+            "n": 3422,
+            "r": 0.541925771319639
+          },
+          {
+            "label": "Mendeley 5k IVF",
+            "z": 0.5063097370851432,
+            "se_z": 0.0143179828409415,
+            "n": 5002,
+            "r": 0.4670649430839418
+          },
+          {
+            "label": "Clomiphene DOR",
+            "z": 0.25940958618058424,
+            "se_z": 0.054838178486736944,
+            "n": 368,
+            "r": 0.25374321577522885
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "z": 0.34638034709839527,
+            "se_z": 0.02856604562028134,
+            "n": 770,
+            "r": 0.33316155055323027
+          },
+          {
+            "label": "Embryoscope hr-NGS KIDScore",
+            "z": 0.5020864575928458,
+            "se_z": 0.09795630689843893,
+            "n": 119,
+            "r": 0.463756464125268
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "z": 0.3485861484001057,
+            "se_z": 0.04710882000668489,
+            "n": 492,
+            "r": 0.3351210721614517
+          }
+        ]
+      },
+      "quality": {
+        "estimator": "Paule-Mandel",
+        "ci_method": "Hartung-Knapp-Sidik-Jonkman",
+        "hksj_variance_floor": "modified HKSJ uses max(1, residual scale) to avoid anti-conservative shrinkage",
+        "prediction_interval_method": "t-based random-effects prediction interval on Fisher-z scale using tau2 plus HKSJ mean variance",
+        "k": 5,
+        "z": 0.015645905369888885,
+        "se_z_conventional_random_effects": 0.015079674074054493,
+        "se_z_hksj": 0.015079674074054493,
+        "z_ci95_hksj": [
+          -0.02622198190099778,
+          0.05751379264077555
+        ],
+        "r": 0.015644628818448785,
+        "r_ci95_hksj": [
+          -0.026215973542259997,
+          0.05745046103117108
+        ],
+        "z_prediction_interval95": [
+          -0.07627344614977524,
+          0.10756525688955301
+        ],
+        "r_prediction_interval95": [
+          -0.07612587908915258,
+          0.10715231438805715
+        ],
+        "p_hksj": 0.35808119845986486,
+        "tau2": 0.0006068448211149903,
+        "q_fixed": 17.5563563432019,
+        "q_df": 4,
+        "i2": 77.21622914341867,
+        "hksj_scale_raw": 1.0,
+        "hksj_scale_used": 1.0,
+        "df_hksj": 4,
+        "df_prediction_interval": 3,
+        "effects": [
+          {
+            "label": "Brigham/Leahy 2021",
+            "z": 0.001303871006528882,
+            "se_z": 0.01012408911538954,
+            "n": 3351,
+            "r": 0.0013038702676345507
+          },
+          {
+            "label": "Mendeley 5k IVF",
+            "z": 0.05751523986967269,
+            "se_z": 0.011023420166933027,
+            "n": 4412,
+            "r": 0.05745190348328903
+          },
+          {
+            "label": "Clomiphene DOR",
+            "z": 0.017434555708854573,
+            "se_z": 0.039245763407140366,
+            "n": 366,
+            "r": 0.01743278943273036
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "z": -0.0222251103905794,
+            "se_z": 0.028983342723215344,
+            "n": 770,
+            "r": -0.022221451708060315
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "z": -0.010389358964436123,
+            "se_z": 0.03970548884481542,
+            "n": 492,
+            "r": -0.010388985175665168
+          }
+        ]
+      }
+    },
+    "afc": {
+      "quantity": {
+        "estimator": "Paule-Mandel",
+        "ci_method": "Hartung-Knapp-Sidik-Jonkman",
+        "hksj_variance_floor": "modified HKSJ uses max(1, residual scale) to avoid anti-conservative shrinkage",
+        "prediction_interval_method": "t-based random-effects prediction interval on Fisher-z scale using tau2 plus HKSJ mean variance",
+        "k": 3,
+        "z": 0.34621613970769205,
+        "se_z_conventional_random_effects": 0.09164636369135275,
+        "se_z_hksj": 0.09164636369135275,
+        "z_ci95_hksj": [
+          -0.04810633720051882,
+          0.7405386166159029
+        ],
+        "r": 0.3330155616422825,
+        "r_ci95_hksj": [
+          -0.04806926197615057,
+          0.6294704705752932
+        ],
+        "z_prediction_interval95": [
+          -1.912662627567185,
+          2.6050949069825693
+        ],
+        "r_prediction_interval95": [
+          -0.9573084790307261,
+          0.989138039058551
+        ],
+        "p_hksj": 0.06347218828333316,
+        "tau2": 0.023205824237480004,
+        "q_fixed": 24.291929012263825,
+        "q_df": 2,
+        "i2": 91.76681275912549,
+        "hksj_scale_raw": 1.0,
+        "hksj_scale_used": 1.0,
+        "df_hksj": 2,
+        "df_prediction_interval": 1,
+        "effects": [
+          {
+            "label": "Clomiphene DOR",
+            "z": 0.5300750388919577,
+            "se_z": 0.055003440768556386,
+            "n": 340,
+            "r": 0.48543844863512414
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "z": 0.2247321738256448,
+            "se_z": 0.028555135692295085,
+            "n": 770,
+            "r": 0.22102374051772225
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "z": 0.2965627006329715,
+            "se_z": 0.04726414228395796,
+            "n": 495,
+            "r": 0.2881638722289442
+          }
+        ]
+      },
+      "quality": {
+        "estimator": "Paule-Mandel",
+        "ci_method": "Hartung-Knapp-Sidik-Jonkman",
+        "hksj_variance_floor": "modified HKSJ uses max(1, residual scale) to avoid anti-conservative shrinkage",
+        "prediction_interval_method": "t-based random-effects prediction interval on Fisher-z scale using tau2 plus HKSJ mean variance",
+        "k": 3,
+        "z": -0.03572314725662346,
+        "se_z_conventional_random_effects": 0.02016573232892613,
+        "se_z_hksj": 0.02016573232892613,
+        "z_ci95_hksj": [
+          -0.12248929050907445,
+          0.05104299599582753
+        ],
+        "r": -0.03570795905842387,
+        "r_ci95_hksj": [
+          -0.12188035025983607,
+          0.050998713217879355
+        ],
+        "z_prediction_interval95": [
+          -0.2919530708828558,
+          0.22050677636960891
+        ],
+        "r_prediction_interval95": [
+          -0.283931426736284,
+          0.21700102711512748
+        ],
+        "p_hksj": 0.21849273676392048,
+        "tau2": 0.0,
+        "q_fixed": 0.8576851543546994,
+        "q_df": 2,
+        "i2": 0.0,
+        "hksj_scale_raw": 0.4288425771773497,
+        "hksj_scale_used": 1.0,
+        "df_hksj": 2,
+        "df_prediction_interval": 1,
+        "effects": [
+          {
+            "label": "Clomiphene DOR",
+            "z": -0.01901241385696839,
+            "se_z": 0.036143236188495,
+            "n": 339,
+            "r": -0.019010123370482097
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "z": -0.030663327234739867,
+            "se_z": 0.029684195592829418,
+            "n": 770,
+            "r": -0.030653720555865255
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "z": -0.06889746481064851,
+            "se_z": 0.04230698600255533,
+            "n": 495,
+            "r": -0.06878865585133348
+          }
+        ]
+      }
+    }
+  },
+  "paired_cluster_bootstrap_contrast": {
+    "contrast": "AMH quantity minus AMH quality",
+    "scale": "paired cohort-family Fisher-z difference; delta_r is averaged within-cohort tanh(quantity_z)-tanh(quality_z)",
+    "bootstrap": "nested patient/group-within-cohort and cohort bootstrap preserving paired quantity/quality estimates from the same AMH vector",
+    "n_boot_requested": 3000,
+    "n_boot_successful": 3000,
+    "failed_replicates": 0,
+    "cohorts": [
+      {
+        "key": "brigham",
+        "label": "Brigham/Leahy 2021",
+        "observed_quantity_z": 0.6068780863515295,
+        "observed_quality_z": 0.001303871006528882,
+        "observed_diff_z": 0.6055742153450007,
+        "observed_delta_r": 0.5406219010520045,
+        "n_rows": 7520,
+        "n_groups": 3272,
+        "quantity_endpoint_names": [
+          "sum_eggs",
+          "sum_mii"
+        ],
+        "quality_endpoint_names": [
+          "maturation_rate",
+          "fertilization_rate",
+          "live_birth"
+        ]
+      },
+      {
+        "key": "mendeley",
+        "label": "Mendeley 5k IVF",
+        "observed_quantity_z": 0.5063097370851432,
+        "observed_quality_z": 0.05751523986967269,
+        "observed_diff_z": 0.4487944972154705,
+        "observed_delta_r": 0.40961303960065276,
+        "n_rows": 5002,
+        "n_groups": 5002,
+        "quantity_endpoint_names": [
+          "total_oocytes",
+          "mii_oocytes"
+        ],
+        "quality_endpoint_names": [
+          "fertilization_rate",
+          "top_grade_rate_grade_denominator"
+        ]
+      },
+      {
+        "key": "clomiphene_dor",
+        "label": "Clomiphene DOR",
+        "observed_quantity_z": 0.25940958618058424,
+        "observed_quality_z": 0.017434555708854573,
+        "observed_diff_z": 0.24197503047172966,
+        "observed_delta_r": 0.2363104263424985,
+        "n_rows": 380,
+        "n_groups": 363,
+        "quantity_endpoint_names": [
+          "total_oocytes",
+          "m2_oocytes"
+        ],
+        "quality_endpoint_names": [
+          "fertilization_rate",
+          "implantation",
+          "live_birth"
+        ]
+      },
+      {
+        "key": "pgta_euploidy",
+        "label": "PGT-A euploidy DOR",
+        "observed_quantity_z": 0.34638034709839527,
+        "observed_quality_z": -0.0222251103905794,
+        "observed_diff_z": 0.36860545748897466,
+        "observed_delta_r": 0.3553830022612906,
+        "n_rows": 778,
+        "n_groups": 778,
+        "quantity_endpoint_names": [
+          "oocytes_retrieved",
+          "euploid_count"
+        ],
+        "quality_endpoint_names": [
+          "euploid_rate",
+          "fertilization_rate"
+        ]
+      },
+      {
+        "key": "heavymetal_dor",
+        "label": "Heavy-metal DOR",
+        "observed_quantity_z": 0.3485861484001057,
+        "observed_quality_z": -0.010389358964436123,
+        "observed_diff_z": 0.3589755073645418,
+        "observed_delta_r": 0.34551005733711687,
+        "n_rows": 495,
+        "n_groups": 495,
+        "quantity_endpoint_names": [
+          "total_oocytes",
+          "mii_oocytes"
+        ],
+        "quality_endpoint_names": [
+          "mii_rate",
+          "two_pn_oocyte_rate"
+        ]
+      }
+    ],
+    "estimate_z_difference": 0.4047849415771435,
+    "ci95_z_difference": [
+      0.29182235861989103,
+      0.5159730105568762
+    ],
+    "estimate_delta_r": 0.37748768531871263,
+    "ci95_delta_r": [
+      0.28030486851722486,
+      0.4682433069671998
+    ],
+    "p_two_sided_bootstrap": 0.0,
+    "p_report": "p<0.001"
+  },
+  "sign_consistency_vote_count": {
+    "near_zero_threshold_abs_r": 0.1,
+    "amh": {
+      "quantity": {
+        "positive": 6,
+        "of": 6,
+        "cohort_rs": [
+          {
+            "label": "Brigham/Leahy 2021",
+            "r": 0.541925771319639
+          },
+          {
+            "label": "Mendeley 5k IVF",
+            "r": 0.4670649430839418
+          },
+          {
+            "label": "Clomiphene DOR",
+            "r": 0.25374321577522885
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "r": 0.33316155055323027
+          },
+          {
+            "label": "Embryoscope hr-NGS KIDScore",
+            "r": 0.463756464125268
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "r": 0.3351210721614517
+          }
+        ]
+      },
+      "quality": {
+        "near_zero_abs_r_lt_0.10": 5,
+        "of_estimable": 5,
+        "cohort_rs": [
+          {
+            "label": "Brigham/Leahy 2021",
+            "r": 0.0013038702676345507
+          },
+          {
+            "label": "Mendeley 5k IVF",
+            "r": 0.05745190348328903
+          },
+          {
+            "label": "Clomiphene DOR",
+            "r": 0.01743278943273036
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "r": -0.022221451708060315
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "r": -0.010388985175665168
+          }
+        ]
+      }
+    },
+    "afc": {
+      "quantity": {
+        "positive": 3,
+        "of": 3,
+        "cohort_rs": [
+          {
+            "label": "Clomiphene DOR",
+            "r": 0.48543844863512414
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "r": 0.22102374051772225
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "r": 0.2881638722289442
+          }
+        ]
+      },
+      "quality": {
+        "near_zero_abs_r_lt_0.10": 3,
+        "of_estimable": 3,
+        "cohort_rs": [
+          {
+            "label": "Clomiphene DOR",
+            "r": -0.019010123370482097
+          },
+          {
+            "label": "PGT-A euploidy DOR",
+            "r": -0.030653720555865255
+          },
+          {
+            "label": "Heavy-metal DOR",
+            "r": -0.06878865585133348
+          }
+        ]
+      }
+    },
+    "headline": "AMH quantity is positive in 6/6 cohorts; AMH quality is near-zero (|r|<0.10) in 5/5 estimable quality cohorts."
+  },
+  "ts": "2026-05-30T05:47:00Z"
+}
