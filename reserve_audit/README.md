@@ -4,10 +4,10 @@ Reusable audit harness for target-separated AMH-IVF recoverability checks.
 
 ## Install
 
-From `code/repos/kromp-blastocyst-dataset-audit`:
+From the repository root:
 
 ```bash
-python -m pip install -e .
+pip install -e .
 ```
 
 The library is dependency-light: `numpy`, `pandas`, `scipy`, and `scikit-learn`.
